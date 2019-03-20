@@ -57,6 +57,20 @@ public class LoginDAOImpl implements LoginDAO {
 		}
 		return verification;
 	}
+	
+	public Verification findUserById(long userid) {
+		Verification verification = null;
+		Query<Verification> query = session
+				.createQuery("from Verification where userId.userId=:userid and countStatus='3'");
+		query.setParameter("userid", userid);
+		List<Verification> veriftlist = query.list();
+		if (!veriftlist.isEmpty() && veriftlist != null) {
+			verification = new Verification();
+			verification = query.list().get(0);
+		}
+		return verification;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Verification checkSecuritycode(long securitycode) {
 		Verification verification = null;

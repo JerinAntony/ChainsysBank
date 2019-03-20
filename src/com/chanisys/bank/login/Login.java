@@ -1,6 +1,7 @@
 package com.chanisys.bank.login;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,17 +34,28 @@ public class Login extends HttpServlet {
 		user.setPassword(password);
 		LoginService loginservice = new LoginServiceImpl();
 		Users checkValiduser = loginservice.validateLogin(user);
-		if (checkValiduser != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("USERID", checkValiduser.getUserId());
-			loginservice.addVerification(checkValiduser);
-			RequestDispatcher rd = request
-					.getRequestDispatcher("authentication.jsp");
+		long loginMinutes = loginservice.failedAttemptLogin(checkValiduser);
+		if (loginMinutes == 0) {
+			if (checkValiduser != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("USERID", checkValiduser.getUserId());
+				loginservice.addVerification(checkValiduser);
+				RequestDispatcher rd = request
+						.getRequestDispatcher("authentication.jsp");
+				rd.forward(request, response);
+			} else {
+				RequestDispatcher rd = request
+						.getRequestDispatcher("login.jsp");
+				rd.forward(request, response);
+			}
+		} else {
+			StringBuilder sb = new StringBuilder();
+			sb.append(loginMinutes + " Minutes");
+			sb.append(" more for your next attempt");
+			request.setAttribute("MESSAGE", sb.toString());
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
 
-		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("login.html");
-			rd.forward(request, response);
 		}
 	}
 }

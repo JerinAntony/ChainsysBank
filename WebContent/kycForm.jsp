@@ -76,7 +76,7 @@ h1 {
 	<div class="fixed-top">
 		<div id="buttonDiv" class="md-form">
 
-			<a href="login.html" class="btn btn-primary btn-danger"><span
+			<a href="login.jsp" class="btn btn-primary btn-danger"><span
 				class="glyphicon glyphicon-chevron-left"></span> Back</a>
 
 		</div>

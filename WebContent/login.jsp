@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <link rel="stylesheet" href="style/style.css" type="text/css">
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -23,8 +24,9 @@
 	rel="stylesheet"
 	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
 	crossorigin="anonymous">
+
 <meta charset="ISO-8859-1">
-<title>authentication</title>
+<title>Login</title>
 <style>
 body {
 	padding-top: 4.2rem;
@@ -86,26 +88,25 @@ h1 {
 			<div class="col-md-5 mx-auto">
 				<div id="first">
 					<div class="myform form ">
-						<div class="logo mb-5">
+						<div class="logo mb-3">
 							<div class="col-md-12 text-center">
-								<h1>Authentication</h1>
+								<h1>Login</h1>
 							</div>
 						</div>
-						<form action="Authentication" method="post">
-							<div class="form-group row">
-								<label for="security" class="col-sm-4 col-form-label">Security
-									Code :</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" id="security"
-										name="security" placeholder="Enter code">
-								</div>
-								<br></br>
-								
+						<form action="Login" method="post" name="login">
+							<div class="form-group">
+								<label for="Loginid">Login Id</label> <input type="loginid"
+									name="loginid" class="form-control" id="email"
+									placeholder="Enter loginid">
 							</div>
-							<div class="errormessage" align="center">${MESSAGE}</div>
+							<div class="form-group">
+								<label for="Password">Password</label> <input type="password"
+									name="password" id="password" class="form-control"
+									placeholder="Enter Password">
+							</div>
 							<div class="col-md-12 text-center ">
 								<button type="submit"
-									class=" btn btn-block mybtn btn-primary tx-tfm">Submit</button>
+									class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
 							</div>
 							<div class="col-md-12 ">
 								<div class="login-or">
@@ -115,9 +116,17 @@ h1 {
 							</div>
 							<div class="form-group">
 								<p class="text-center">
-									Don't you receive code ? <a href=" " id="resendCode">Resend</a>
+									Don't you remember your password? <a href="forgotpassword.html"
+										id="forgotpassword">Click here</a>
 								</p>
 							</div>
+							<div class="form-group">
+								<p class="text-center">
+									Don't have account? <a href="kycForm.jsp" id="signup">Sign
+										up here</a>
+								</p>
+							</div>
+							<div class="errormessage">${MESSAGE}</div>
 						</form>
 					</div>
 				</div>

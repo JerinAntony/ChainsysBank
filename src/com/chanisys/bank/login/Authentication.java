@@ -39,8 +39,10 @@ public class Authentication extends HttpServlet {
 		} else {
 			Verification verificationUser = loginservice.loginAttempt(userid);
 			if (verificationUser.getCountStatus() == 3) {
+				String message ="3 Attempts Failed.Please try again after 1 hour";
+				request.setAttribute("MESSAGE", message);
 				RequestDispatcher rd = request
-						.getRequestDispatcher("login.html");
+						.getRequestDispatcher("login.jsp");
 				rd.forward(request, response);
 			} else {
 				String error = "Invalid OTP";

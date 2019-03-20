@@ -1,7 +1,11 @@
 package com.chainsys.bank.service.impl;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.chainsys.bank.constant.Constants;
 import com.chainsys.bank.dao.LoginDAO;
@@ -21,6 +25,15 @@ public class LoginServiceImpl implements LoginService {
 
 	}
 
+	/*
+	 * Method to check if already login user update secuitycode and modify date
+	 * in authentication /if new user insert operation will occur in
+	 * authentication
+	 * 
+	 * @see
+	 * com.chainsys.bank.service.LoginService#addVerification(com.chainsys.bank
+	 * .model.Users)
+	 */
 	@Override
 	public void addVerification(Users user) {
 		Verification verification = loginAttempt(user.getUserId());
@@ -55,11 +68,21 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 
+	/*
+	 * Method to check the login users already done two way authentication
+	 * 
+	 * @see com.chainsys.bank.service.LoginService#loginAttempt(long)
+	 */
 	public Verification loginAttempt(long userid) {
 		Verification verification = loginDAO.findUserInVerification(userid);
 		return verification;
 	}
 
+	/*
+	 * Method to update invalid attempt count in Authentication
+	 * 
+	 * @see com.chainsys.bank.service.LoginService#invalidAttempt(long)
+	 */
 	public void invalidAttempt(long userid) {
 		Verification verification = loginDAO.findUserInVerification(userid);
 		verification.setCountStatus(verification.getCountStatus() + 1);
@@ -72,4 +95,18 @@ public class LoginServiceImpl implements LoginService {
 		return loginDAO.checkSecuritycode(securitycode);
 	}
 
+	public long failedAttemptLogin(Users user) {
+		long minutes = 0;
+		Verification verification = loginDAO.findUserById(user.getUserId());
+		Date d1 = new Date(Timestamp.valueOf(LocalDateTime.now()).getTime());
+		if (verification != null) {
+			Date d2 = new Date(verification.getModifiedDate().getTime());
+			long difference = d1.getTime() - d2.getTime();
+			long diffHours = difference / (60 * 60 * 1000) % 24;
+			if (diffHours == 0) {
+				minutes = 60 - (difference / (60 * 1000) % 60);
+			}
+		}
+		return minutes;
+	}
 }

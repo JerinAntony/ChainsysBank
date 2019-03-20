@@ -11,4 +11,8 @@ public interface LoginDAO {
 	Verification checkSecuritycode(long securitycode);
 	
 	Verification findUserInVerification(long userid);
+	
+	Verification findUserById(long userid);
+	
+	
 }

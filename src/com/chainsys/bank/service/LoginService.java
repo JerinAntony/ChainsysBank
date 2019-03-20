@@ -14,4 +14,6 @@ public interface LoginService {
 	void invalidAttempt(long userid);
 	
 	Verification loginAttempt(long userid);
+	
+	long failedAttemptLogin(Users user);
 }
