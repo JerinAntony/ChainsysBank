@@ -1,9 +1,11 @@
 package com.chainsys.bank.dao.impl;
 
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+
 import com.chainsys.bank.dao.LoginDAO;
 import com.chainsys.bank.model.Users;
 import com.chainsys.bank.model.Verification;
@@ -38,12 +40,14 @@ public class LoginDAOImpl implements LoginDAO {
 		return loginUser;
 	}
 
+	@Override
 	public void insertVerification(Verification verification) {
 		session.saveOrUpdate(verification);
 		session.getTransaction().commit();
 
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public Verification findUserInVerification(long userid) {
 		Verification verification = null;
@@ -58,6 +62,8 @@ public class LoginDAOImpl implements LoginDAO {
 		return verification;
 	}
 	
+	@Override
+	@SuppressWarnings("unchecked")
 	public Verification findUserById(long userid) {
 		Verification verification = null;
 		Query<Verification> query = session
@@ -83,5 +89,20 @@ public class LoginDAOImpl implements LoginDAO {
 			verification = query.list().get(0);
 		}
 		return verification;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public Users checkLoginId(String loginid) {
+		Users loginuser = null;
+		Query<Users> query = session
+				.createQuery("from Users where loginId=:loginid");
+		query.setParameter("loginid",loginid);
+		List<Users> veriftlist = query.list();
+		if (!veriftlist.isEmpty() && veriftlist != null) {
+			loginuser = new Users();
+			loginuser = query.list().get(0);
+		}
+		return loginuser;
 	}
 }

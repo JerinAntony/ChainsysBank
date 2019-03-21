@@ -1,10 +1,7 @@
 package com.chainsys.bank.service.impl;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.Date;
 
 import com.chainsys.bank.constant.Constants;
@@ -108,5 +105,11 @@ public class LoginServiceImpl implements LoginService {
 			}
 		}
 		return minutes;
+	}
+
+	@Override
+	public Users checkLoginId(String loginid) {
+		Users userlogin = loginDAO.checkLoginId(loginid);
+		return userlogin;
 	}
 }

@@ -7,6 +7,8 @@ public interface LoginService {
 
 	Users validateLogin(Users user);
 	
+	Users checkLoginId(String loginid);
+	
 	void addVerification(Users user);
 	
 	Verification verifySecurityCode(long securitycode);

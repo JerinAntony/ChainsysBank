@@ -33,29 +33,41 @@ public class Login extends HttpServlet {
 		user.setLoginId(loginid);
 		user.setPassword(password);
 		LoginService loginservice = new LoginServiceImpl();
-		Users checkValiduser = loginservice.validateLogin(user);
-		long loginMinutes = loginservice.failedAttemptLogin(checkValiduser);
-		if (loginMinutes == 0) {
-			if (checkValiduser != null) {
-				HttpSession session = request.getSession();
-				session.setAttribute("USERID", checkValiduser.getUserId());
-				loginservice.addVerification(checkValiduser);
-				RequestDispatcher rd = request
-						.getRequestDispatcher("authentication.jsp");
-				rd.forward(request, response);
+		Users checkLoginId = loginservice.checkLoginId(user.getLoginId());
+		if (checkLoginId != null) {
+			long loginMinutes = loginservice.failedAttemptLogin(checkLoginId);
+			if (loginMinutes == 0) {
+				Users checkValiduser = loginservice.validateLogin(user);
+				if (checkValiduser != null) {
+					
+					HttpSession session = request.getSession();
+					session.setAttribute("USERID", checkValiduser.getUserId());
+					loginservice.addVerification(checkValiduser);
+					RequestDispatcher rd = request
+							.getRequestDispatcher("authentication.jsp");
+					rd.forward(request, response);
+				} else {
+					String message = "Invalid LoginId and Password";
+					request.setAttribute("MESSAGE", message);
+					RequestDispatcher rd = request
+							.getRequestDispatcher("login.jsp");
+					rd.forward(request, response);
+				}
 			} else {
+				StringBuilder sb = new StringBuilder();
+				sb.append(loginMinutes + " Minutes");
+				sb.append(" more for your next attempt");
+				request.setAttribute("MESSAGE", sb.toString());
 				RequestDispatcher rd = request
 						.getRequestDispatcher("login.jsp");
 				rd.forward(request, response);
+
 			}
 		} else {
-			StringBuilder sb = new StringBuilder();
-			sb.append(loginMinutes + " Minutes");
-			sb.append(" more for your next attempt");
-			request.setAttribute("MESSAGE", sb.toString());
+			String message = "Not a valid user!Please register and then login";
+			request.setAttribute("MESSAGE", message);
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
-
 		}
 	}
 }
