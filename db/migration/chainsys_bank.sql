@@ -65,6 +65,8 @@ created_date TIMESTAMP,
 modified_by NUMBER(10),
 modified_date TIMESTAMP);
 
+Alter table TRN_ACCOUNT modify account_no varchar2(50);
+
 CREATE TABLE TRN_PROFILE
 (profile_id NUMBER(10) CONSTRAINT trn_profile_id_pk PRIMARY KEY,
 user_id NUMBER(10),
@@ -94,15 +96,16 @@ updated_by NUMBER,
 updated_date TIMESTAMP);
 
 CREATE TABLE TRN_PAYEE
-(payee_id NUMBER CONSTRAINT trn_payee_id_pk PRIMARY KEY,
-user_id NUMBER CONSTRAINT fk_trn_payee_userid REFERENCES TRN_USERS(users_id),
-account_holder_name VARCHAR2(30) NOT NULL,
-account_no NUMBER(12) NOT NULL,
-ifsc_code NUMBER NOT NULL CONSTRAINT fk_ifsc_code REFERENCES TRN_BANK_IFSC_CODE(id), 
-created_by NUMBER,
+(payee_id NUMBER(10) CONSTRAINT trn_payee_id_pk PRIMARY KEY,
+user_id NUMBER(10),
+account_holder_name VARCHAR2(50) NOT NULL,
+account_no varchar2(50) NOT NULL,
+ifsc_code NUMBER(10), 
+created_by NUMBER(10),
 created_date TIMESTAMP,
-updated_by NUMBER,
-updated_date TIMESTAMP);
+modified_by NUMBER(10),
+modified_date TIMESTAMP);
+
 
 
 CREATE TABLE TRN_USER_LOAN

@@ -27,7 +27,6 @@ public class LoginDAOImpl implements LoginDAO {
 	@SuppressWarnings("unchecked")
 	public Users checkLoginCredencials(Users user) {
 		Users loginUser = null;
-		System.out.println();
 		Query<Users> query = session
 				.createQuery("from Users where loginId=:loginid and password=:passwords");
 		query.setParameter("loginid", user.getLoginId());
@@ -105,4 +104,6 @@ public class LoginDAOImpl implements LoginDAO {
 		}
 		return loginuser;
 	}
+	
+
 }

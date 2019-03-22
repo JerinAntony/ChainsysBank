@@ -27,4 +27,8 @@ public interface KnowYourCustomerDAO {
 	void commitTraction();
 	
 	void deleteUser(Users user);
+	
+	Profile findProfileDetails(long userid);
+	
+	CurrentAddress userCurrentAddress(long userid);
 }

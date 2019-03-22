@@ -3,9 +3,12 @@ package com.chainsys.bank.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import com.chainsys.bank.dao.KnowYourCustomerDAO;
 import com.chainsys.bank.model.Account;
@@ -76,11 +79,11 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 		session.getTransaction().commit();
 	}
 
-	public void deleteUser(Users user){
+	public void deleteUser(Users user) {
 		session.delete(user);
 		session.getTransaction().commit();
 	}
-	
+
 	public City findCity(City city) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -104,4 +107,70 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 		}
 		return citylocation;
 	}
+
+	public Profile findProfileDetails(long userid) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Profile profile = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "Select u.first_name,u.middle_name,u.sur_name,u.phone_number,u.email,p.gender,p.date_of_birth,p.occupation,p.aadhar_no,p.pancard "
+					+ "from TRN_USERS u join TRN_PROFILE p on u.users_id=p.user_id"
+					+ " join TRN_CURT_ADDRS d on u.users_id=d.user_id "
+					+ "join CITY c on d.city_id=c.city_id"
+					+ " where u.users_id=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setLong(1, userid);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				Users user = new Users();
+				user.setFirstName(resultSet.getString("first_name"));
+				user.setMiddleName(resultSet.getString("middle_name"));
+				user.setSurName(resultSet.getString("sur_name"));
+				user.setPhoneNumber(resultSet.getLong("phone_number"));
+				user.setEmail(resultSet.getString("email"));
+				profile = new Profile();
+				profile.setUserId(user);
+				profile.setGender(resultSet.getString("gender").charAt(0));
+				profile.setDateOfBirth(resultSet.getDate("date_of_birth")
+						.toLocalDate());
+				profile.setOccupdation(resultSet.getString("occupation"));
+				profile.setAadharNo(resultSet.getLong("aadhar_no"));
+				profile.setPancard(resultSet.getString("pancard"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return profile;
+	}
+
+	public CurrentAddress userCurrentAddress(long userid) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		CurrentAddress currentaddress = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "select d.address_one,d.address_two,c.location,c.pincode from TRN_CURT_ADDRS d join CITY c on d.city_id=c.city_id where d.user_id=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setLong(1, userid);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				City city = new City();
+				city.setLocation(resultSet.getString("location"));
+				city.setPinCode(resultSet.getLong("pincode"));
+				currentaddress = new CurrentAddress();
+				currentaddress.setCityId(city);
+				currentaddress.setAddressLineone(resultSet
+						.getString("address_one"));
+				currentaddress.setAddressLinetwo(resultSet
+						.getString("address_two"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return currentaddress;
+	}
+
 }

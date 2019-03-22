@@ -1,5 +1,6 @@
 package com.chainsys.bank.dao;
 
+import com.chainsys.bank.model.BankIfscCode;
 import com.chainsys.bank.model.Users;
 import com.chainsys.bank.model.Verification;
 public interface LoginDAO {

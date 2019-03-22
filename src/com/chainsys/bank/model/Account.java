@@ -30,7 +30,7 @@ public class Account {
 
 	@Column(name = "account_no")
 	@NotNull
-	private long accountNo;
+	private String accountNo;
 
 	@Column(name = "account_type")
 	@NotNull
@@ -71,15 +71,15 @@ public class Account {
 		this.userId = userId;
 	}
 
-	public long getAccountNo() {
+	
+	public String getAccountNo() {
 		return accountNo;
 	}
 
-	public void setAccountNo(long accountNo) {
+	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
 
-	
 	public String getAccountType() {
 		return accountType;
 	}
@@ -145,5 +145,6 @@ public class Account {
 				+ ", modifiedBy=" + modifiedBy + ", modifiedDate="
 				+ modifiedDate + "]";
 	}
+
 
 }

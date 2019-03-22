@@ -12,31 +12,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
-
 @Entity
-@Table(name = "TRN_PRMT_ADDRS")
-public class PermanentAddress {
+@Table(name = "TRN_PAYEE")
+public class Payee {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "Permanent_Addrs_generator")
-	@Column(name = "prmt_addrs_id", updatable = false)
-	private Long prmtAddrsId;
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "Payee_generator")
+	@Column(name = "payee_id", updatable = false)
+	private Long payeeId;
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private Users userId;
 
-	@Column(name = "address_one")
-	@NotNull
-	private String addressLineone;
+	@Column(name = "account_holder_name")
+	private String holderName;
 
-	@Column(name = "address_two")
-	private String addressLinetwo;
+	@Column(name = "account_no")
+	private String accountNo;
 
-	@OneToOne
-	@JoinColumn(name = "city_id")
-	private City cityId;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ifsc_code")
+	private BankIfscCode ifscId;
 
 	@Column(name = "created_by")
 	private long createdBy;
@@ -50,12 +47,12 @@ public class PermanentAddress {
 	@Column(name = "modified_date")
 	private Timestamp modifiedDate;
 
-	public Long getPrmtAddrsId() {
-		return prmtAddrsId;
+	public Long getPayeeId() {
+		return payeeId;
 	}
 
-	public void setPrmtAddrsId(Long prmtAddrsId) {
-		this.prmtAddrsId = prmtAddrsId;
+	public void setPayeeId(Long payeeId) {
+		this.payeeId = payeeId;
 	}
 
 	public Users getUserId() {
@@ -66,28 +63,28 @@ public class PermanentAddress {
 		this.userId = userId;
 	}
 
-	public String getAddressLineone() {
-		return addressLineone;
+	public String getHolderName() {
+		return holderName;
 	}
 
-	public void setAddressLineone(String addressLineone) {
-		this.addressLineone = addressLineone;
+	public void setHolderName(String holderName) {
+		this.holderName = holderName;
 	}
 
-	public String getAddressLinetwo() {
-		return addressLinetwo;
+	public String getAccountNo() {
+		return accountNo;
 	}
 
-	public void setAddressLinetwo(String addressLinetwo) {
-		this.addressLinetwo = addressLinetwo;
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
 	}
 
-	public City getCityId() {
-		return cityId;
+	public BankIfscCode getIfscId() {
+		return ifscId;
 	}
 
-	public void setCityId(City cityId) {
-		this.cityId = cityId;
+	public void setIfscId(BankIfscCode ifscId) {
+		this.ifscId = ifscId;
 	}
 
 	public long getCreatedBy() {
@@ -124,12 +121,11 @@ public class PermanentAddress {
 
 	@Override
 	public String toString() {
-		return "PermanentAddress [prmtAddrsId=" + prmtAddrsId + ", userId="
-				+ userId + ", addressLineone=" + addressLineone
-				+ ", addressLinetwo=" + addressLinetwo + ", cityId=" + cityId
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", modifiedBy=" + modifiedBy + ", modifiedDate="
-				+ modifiedDate + "]";
+		return "Payee [payeeId=" + payeeId + ", userId=" + userId
+				+ ", holderName=" + holderName + ", accountNo=" + accountNo
+				+ ", ifscId=" + ifscId + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy
+				+ ", modifiedDate=" + modifiedDate + "]";
 	}
 
 }

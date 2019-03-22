@@ -1,6 +1,7 @@
 package com.chainsys.bank.util;
 
 import java.util.Random;
+
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.HtmlEmail;
@@ -73,5 +74,37 @@ public class Utilities {
 			sd.append(values.charAt(random.nextInt(values.length())));
 		}
 		return sd.toString();
+	}
+
+	/**
+	 * Method to mask user account number
+	 * 
+	 * @param strText
+	 * @param start
+	 * @param end
+	 * @param maskChar
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unused")
+	private static String maskString(String strText, int start, int end,
+			char maskChar) throws Exception {
+		if (strText == null || strText.equals(""))
+			return "";
+		if (start < 0)
+			start = 0;
+		if (end > strText.length())
+			end = strText.length();
+		if (start > end)
+			throw new Exception("End index cannot be greater than start index");
+		int maskLength = end - start;
+		if (maskLength == 0)
+			return strText;
+		StringBuilder sbMaskString = new StringBuilder(maskLength);
+		for (int i = 0; i < maskLength; i++) {
+			sbMaskString.append(maskChar);
+		}
+		return strText.substring(0, start) + sbMaskString.toString()
+				+ strText.substring(start + maskLength);
 	}
 }

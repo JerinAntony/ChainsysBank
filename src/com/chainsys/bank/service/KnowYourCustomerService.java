@@ -15,4 +15,10 @@ public interface KnowYourCustomerService {
 	City findCity(City city);
 	
 	void deleteUser(Users user);
+	
+	Profile profileView(long userid);
+	
+	CurrentAddress userCurrentAddress(long userid);
+		
+	
 }

@@ -22,7 +22,7 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 
 	@Override
 	public boolean addKYCForm(Users user, PermanentAddress prmtaddress,
-			CurrentAddress curntaddress, Profile profile, Account accounts){
+			CurrentAddress curntaddress, Profile profile, Account accounts) {
 		boolean isSucess = false;
 		if (user != null) {
 			user.setPassword(Utilities.passwordGenerator());
@@ -65,7 +65,8 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 				if (accounts != null) {
 					accounts.setUserId(user);
 					accounts.setOpeningDate(LocalDate.now());
-					accounts.setAccountNo(Utilities.getAccountno());
+					accounts.setAccountNo(String.valueOf(Utilities
+							.getAccountno()));
 					accounts.setBalance(BigDecimal.ZERO);
 					accounts.setCreatedBy(user.getUserId());
 					accounts.setCreatedDate(Timestamp.valueOf(LocalDateTime
@@ -103,6 +104,18 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 	@Override
 	public void deleteUser(Users user) {
 		kfcDAO.deleteUser(user);
+	}
+
+	@Override
+	public Profile profileView(long userid) {
+		Profile profile = kfcDAO.findProfileDetails(userid);
+		return profile;
+	}
+
+	@Override
+	public CurrentAddress userCurrentAddress(long userid) {
+		CurrentAddress currentAddress = kfcDAO.userCurrentAddress(userid);
+		return currentAddress;
 	}
 
 }
