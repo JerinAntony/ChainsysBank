@@ -1,7 +1,12 @@
 package com.chainsys.bank.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +14,9 @@ import org.hibernate.query.Query;
 
 import com.chainsys.bank.dao.AccountsDAO;
 import com.chainsys.bank.model.BankIfscCode;
+import com.chainsys.bank.model.City;
 import com.chainsys.bank.model.Payee;
+import com.chainsys.bank.util.ConnectionUtil;
 import com.chainsys.bank.util.HibernateUtil;
 
 public class AccountsDAOImpl implements AccountsDAO {
@@ -50,7 +57,6 @@ public class AccountsDAOImpl implements AccountsDAO {
 		return isSucess;
 	}
 
-	
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Payee> findAllPayee() {
@@ -59,5 +65,37 @@ public class AccountsDAOImpl implements AccountsDAO {
 		payeeList = query.list();
 		return payeeList;
 	}
+
+	public List<BankIfscCode> findAllBanks() {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		BankIfscCode bank = null;
+		List<BankIfscCode> bankNameList = new ArrayList<>();
+		try {
+			connection = ConnectionUtil.getConnection();
+			String url = "SELECT DISTINCT(BANK) as bankname from trn_bank_ifsc_code";
+			preparedStatement = connection.prepareStatement(url);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				bank = new BankIfscCode();
+				bank.setBankName(resultSet.getString("bankname"));
+				bankNameList.add(bank);
+			}
+			System.out.println(bankNameList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bankNameList;
+	}
+
+	/*
+	 * @Override
+	 * 
+	 * @SuppressWarnings("unchecked") public List<BankIfscCode> findAllBanks() {
+	 * List<BankIfscCode> bankNameList = new ArrayList<>(); Query<BankIfscCode>
+	 * query = session.createQuery("from BankIfscCode"); bankNameList =
+	 * query.list(); return bankNameList; }
+	 */
 
 }

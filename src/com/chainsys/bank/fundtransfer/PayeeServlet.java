@@ -1,6 +1,9 @@
 package com.chainsys.bank.fundtransfer;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.TreeSet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,6 +27,21 @@ import com.chainsys.bank.service.impl.AccountsServiceImpl;
 @WebServlet("/PayeeServlet")
 public class PayeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	AccountsService accountsService = new AccountsServiceImpl();
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String payee = "View Payee";
+		List<BankIfscCode> bankIfsccodeList = accountsService.findAllBanks();
+		request.setAttribute("PAYEE", payee);
+		request.setAttribute("BANKS", bankIfsccodeList);
+		System.out.println(bankIfsccodeList);
+		RequestDispatcher  rd = request.getRequestDispatcher("payee.jsp");
+		 rd = request.getRequestDispatcher("home.jsp");
+		
+		rd.forward(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

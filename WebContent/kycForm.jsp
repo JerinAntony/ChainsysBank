@@ -6,14 +6,14 @@
 <head>
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css"
+	href="css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- Material Design Bootstrap -->
 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.8/css/mdb.min.css"
+	href="css/mdb.min.css"
 	rel="stylesheet">
 <meta charset="ISO-8859-1">
 

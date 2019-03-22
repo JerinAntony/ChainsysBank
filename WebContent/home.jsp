@@ -6,14 +6,14 @@
 <head>
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css"
+	href="css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- Material Design Bootstrap -->
 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.8/css/mdb.min.css"
+	href="css/mdb.min.css"
 	rel="stylesheet">
 
 <meta charset="ISO-8859-1">
@@ -121,10 +121,7 @@ html, body {
 			</a> <a href="#" id="Anav"
 				class="list-group-item list-group-item-action waves-effect"> <i
 				class="fa fa-th-list"></i>&nbsp;&nbsp;Account Summary
-			</a> <a href="#" id="Snav"
-				class="list-group-item list-group-item-action waves-effect"> <i
-				class="	fa fa-plus-square-o"></i>&nbsp;&nbsp; Add Payee
-			</a> <a href="#" id="Snav"
+			</a> <a href="FundTransfer" id="Snav"
 				class="list-group-item list-group-item-action waves-effect"> <i
 				class="	fa fa-send"></i>&nbsp;&nbsp; Fund Transfer
 			</a> <a href="#" id="Snav"
@@ -141,6 +138,12 @@ html, body {
 	<div class="w3-display-middle" style="padding-top: 50px">
 		<c:if test="${PROFILE!=null}">
 			<%@ include file="profile.jsp"%>
+		</c:if>
+		<c:if test="${FUNDTRANSFER!=null}">
+			<%@ include file="fund_transfer.jsp"%>
+		</c:if>
+		<c:if test="${PAYEE!=null}">
+			<%@ include file="payee.jsp"%>
 		</c:if>
 	</div>
 	<div class="footer">

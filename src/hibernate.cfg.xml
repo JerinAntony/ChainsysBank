@@ -25,5 +25,7 @@
 		<mapping class="com.chainsys.bank.model.City" />
 		<mapping class="com.chainsys.bank.model.Verification" />
 		<mapping class="com.chainsys.bank.model.Account" />
+		<mapping class="com.chainsys.bank.model.BankIfscCode" />
+		<mapping class="com.chainsys.bank.model.Payee" />
 	</session-factory>
 </hibernate-configuration>
