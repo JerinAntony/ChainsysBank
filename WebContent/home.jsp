@@ -142,7 +142,7 @@ html, body {
 		<c:if test="${FUNDTRANSFER!=null}">
 			<%@ include file="fund_transfer.jsp"%>
 		</c:if>
-		<c:if test="${PAYEE!=null}">
+		<c:if test="${PAYEEPAGE!=null}">
 			<%@ include file="payee.jsp"%>
 		</c:if>
 	</div>

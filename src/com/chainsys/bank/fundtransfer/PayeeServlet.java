@@ -19,7 +19,9 @@ import com.chainsys.bank.model.BankIfscCode;
 import com.chainsys.bank.model.Payee;
 import com.chainsys.bank.model.Users;
 import com.chainsys.bank.service.AccountsService;
+import com.chainsys.bank.service.LoginService;
 import com.chainsys.bank.service.impl.AccountsServiceImpl;
+import com.chainsys.bank.service.impl.LoginServiceImpl;
 
 /**
  * Servlet implementation class PayeeServlet
@@ -34,12 +36,11 @@ public class PayeeServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String payee = "View Payee";
 		List<BankIfscCode> bankIfsccodeList = accountsService.findAllBanks();
-		request.setAttribute("PAYEE", payee);
+		request.setAttribute("PAYEEPAGE", payee);
 		request.setAttribute("BANKS", bankIfsccodeList);
-		System.out.println(bankIfsccodeList);
-		RequestDispatcher  rd = request.getRequestDispatcher("payee.jsp");
-		 rd = request.getRequestDispatcher("home.jsp");
-		
+		RequestDispatcher rd = request.getRequestDispatcher("payee.jsp");
+		rd = request.getRequestDispatcher("home.jsp");
+
 		rd.forward(request, response);
 	}
 
@@ -51,23 +52,24 @@ public class PayeeServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		long userid = (long) session.getAttribute("USERID");
-		Users user = new Users();
-		user.setUserId(userid);
+		LoginService loginservice = new LoginServiceImpl();
+		Users user = loginservice.getUser(userid);
 		AccountsService acountsservice = new AccountsServiceImpl();
 		String holdername = request.getParameter("holdername");
 		String accountno = request.getParameter("accountno");
-		String branch = request.getParameter("branch");
-		String ifsccode = request.getParameter("ifsccode");
+		String bank = request.getParameter("bankname");
+		String branch = request.getParameter("branchname");
+		System.out.println(bank);
+		System.out.println(branch);
 		BankIfscCode bankIfsccode = new BankIfscCode();
-		if (!branch.isEmpty() && branch.length() > 0 && branch != null) {
+		if (!bank.isEmpty() && bank.length() > 0 && bank != null) {
+			bankIfsccode.setBankName(bank);
+		} else if (!branch.isEmpty() && branch.length() > 0 && branch != null) {
 			bankIfsccode.setBranch(branch);
-		} else if (!ifsccode.isEmpty() && ifsccode.length() > 0
-				&& ifsccode != null) {
-			bankIfsccode.setIfscCode(ifsccode);
 		} else {
-			String invalid = "Invalid Branch & IFSC Code";
+			String invalid = "Select Bank & Branch";
 			request.setAttribute("MESSAGE", invalid);
-			RequestDispatcher rd = request.getRequestDispatcher("");
+			RequestDispatcher rd = request.getRequestDispatcher("payee.jsp");
 			rd.forward(request, response);
 		}
 		bankIfsccode = acountsservice.findIfsccode(bankIfsccode);
@@ -80,8 +82,8 @@ public class PayeeServlet extends HttpServlet {
 		if (isSucess) {
 			String sucess = "Payee Added Sucessfully";
 			request.setAttribute("MESSAGE", sucess);
-			RequestDispatcher rd = request.getRequestDispatcher("");
-			rd.forward(request, response);
+			doGet(request, response);
+			// rd.forward(request, response);
 		} else {
 			String sucess = "Failed to Add Payee";
 			request.setAttribute("MESSAGE", sucess);

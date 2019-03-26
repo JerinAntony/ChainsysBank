@@ -35,9 +35,9 @@ public class AccountsDAOImpl implements AccountsDAO {
 	public BankIfscCode findIfsccode(BankIfscCode ifsccode) {
 		BankIfscCode bankifsccode = null;
 		Query<BankIfscCode> query = session
-				.createQuery("from BankIfscCode where branch=? or ifscCode=?");
-		query.setParameter(1, ifsccode.getBranch());
-		query.setParameter(2, ifsccode.getIfscCode());
+				.createQuery("from BankIfscCode where bankName=:bank or branch=:branch");
+		query.setParameter("bank", ifsccode.getBankName());
+		query.setParameter("branch", ifsccode.getBranch());
 		List<BankIfscCode> ifsclist = query.list();
 		if (!ifsclist.isEmpty() && ifsclist != null) {
 			bankifsccode = new BankIfscCode();
@@ -89,13 +89,18 @@ public class AccountsDAOImpl implements AccountsDAO {
 		return bankNameList;
 	}
 
-	/*
-	 * @Override
-	 * 
-	 * @SuppressWarnings("unchecked") public List<BankIfscCode> findAllBanks() {
-	 * List<BankIfscCode> bankNameList = new ArrayList<>(); Query<BankIfscCode>
-	 * query = session.createQuery("from BankIfscCode"); bankNameList =
-	 * query.list(); return bankNameList; }
-	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BankIfscCode> findBranchByBank(String bankname) {
+		Query<BankIfscCode> query = session
+				.createQuery("from BankIfscCode where bankName=:bank");
+		query.setParameter("bank", bankname);
+		List<BankIfscCode> branchList = query.list();
+		return branchList;
+	}
+
+	public void commitTraction() {
+		session.getTransaction().commit();
+	}
 
 }

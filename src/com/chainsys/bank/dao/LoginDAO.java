@@ -7,6 +7,8 @@ public interface LoginDAO {
 
 	Users checkLoginCredencials(Users user);
 	
+	Users getUser(long userid);
+	
 	Users checkLoginId(String loginid);
     
 	void insertVerification(Verification verification);

@@ -14,4 +14,10 @@ public interface AccountsService {
 	boolean addPayee(Payee payee);
 	
 	List<BankIfscCode> findAllBanks();
+	
+	List<BankIfscCode> findBranchByBank(String bankname);
+	
+	List<Payee> findAllPayee();
+	
+	
 }

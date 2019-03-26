@@ -12,8 +12,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <script src="js/jquery.validate.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script"
-	rel="stylesheet">
+<link href="css/KaushanScript.css" rel="stylesheet">
 <link href="css/font-awesome.min.css" rel="stylesheet"
 	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
 	crossorigin="anonymous">

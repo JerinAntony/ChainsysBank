@@ -104,6 +104,22 @@ public class LoginDAOImpl implements LoginDAO {
 		}
 		return loginuser;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Users getUser(long userid) {
+		Users loginUser = null;
+		Query<Users> query = session
+				.createQuery("from Users where userId=:userid");
+		query.setParameter("userid", userid);
+		List<Users> veriftlist = query.list();
+		if (!veriftlist.isEmpty() && veriftlist != null) {
+			loginUser = new Users();
+			loginUser = query.list().get(0);
+		}
+		return loginUser;
+		
+	}
 	
 
 }

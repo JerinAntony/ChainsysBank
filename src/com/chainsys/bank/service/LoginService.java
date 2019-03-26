@@ -18,4 +18,6 @@ public interface LoginService {
 	Verification loginAttempt(long userid);
 	
 	long failedAttemptLogin(Users user);
+	
+	Users getUser(long userid);
 }

@@ -12,4 +12,6 @@ public interface AccountsDAO {
 	boolean addPayee(Payee payee);
 	List<Payee> findAllPayee();
 	List<BankIfscCode> findAllBanks();
+	List<BankIfscCode> findBranchByBank(String bankname);
+	void commitTraction();
 }

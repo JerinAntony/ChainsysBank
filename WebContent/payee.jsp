@@ -6,7 +6,10 @@
 <head>
 <link rel="stylesheet" href="style/style.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>footer</title>
+<title>Add Payee</title>
+<script src="https://code.jquery.com/jquery-1.10.2.js"
+	type="text/javascript"></script>
+<script src="js/app-ajax.js" type="text/javascript"></script>
 <style>
 h1 {
 	font-family: 'Kaushan Script', cursive;
@@ -70,54 +73,47 @@ input[type=text], select {
 	</div>
 	<br />
 	<br />
-	<div class="w3-display-bottommiddle" style="color: black">
-		<p class="p"></p>
-	</div>
+	<form action="PayeeServlet" method="post">
+		<div class="w3-display-bottommiddle" style="color: black"
+			align="center">
 
-	<div class="row">
-		<div class="col-sm-4" style="color: black">
-			<p class="p">
-				<input type="text" id="holdername" class="form-control"
-					style="width: 95%" required name="holdername"
-					placeholder="Account Holder Name">
-			</p>
+			<div class="w3-display-bottommiddle" style="color: black">
+				<p class="p">
+					<input type="text" id="holdername" class="form-control"
+						style="width: 30%" required name="holdername"
+						placeholder="Account Holder Name">
+				</p>
+			</div>
+			<div class="w3-display-bottommiddle" style="color: black">
+				<p class="p">
+					<input type="text" id="accountno" class="form-control"
+						style="width: 30%" required name="accountno"
+						placeholder="Account No">
+				</p>
+			</div>
+			<div class="w3-display-bottommiddle" style="color: black">
+				<p class="p">
+					<select name="bankname" id="bankName" style="width: 30%" required>
+						<option value="">Select bank</option>
+						<c:forEach var="bankl" items="${BANKS}">
+							<option value="${bankl.bankName}">${bankl.bankName}</option>
+						</c:forEach>
+					</select>
+				</p>
+			</div>
+			<div class="w3-display-bottommiddle" style="color: black">
+				<p class="p">
+					<select name="branchname" id="branchname" style="width: 30%">
+					</select>
+				</p>
+			</div>
+			<div>${MESSAGE}</div>
+			<div>
+				<button type="submit" class="btn btn-primary btn-danger">Add</button>
+
+			</div>
 		</div>
-
-	</div>
-	<div class="w3-display-bottommiddle" style="color: black">
-		<p class="p">
-			<input type="text" id="accountno" class="form-control"
-				style="width: 30%" required name="accountno"
-				placeholder="Account No">
-		</p>
-	</div>
-	<div class="w3-display-bottommiddle" style="color: black">
-		<p class="p">
-			<select name="bank" id="bank" style="width: 30%" required>
-			<option value="">Select bank</option>
-				<c:forEach var="bankl" items="${BANKS}">
-					<option value="${bankl.bankName}">${bankl.bankName}</option>
-				</c:forEach>
-			</select>
-		</p>
-	</div>
-	<div class="w3-display-bottommiddle" style="color: black">
-		<p class="p">
-			<input type="text" id="branch" class="form-control"
-				style="width: 30%" required name="branch" placeholder="Branch">
-		</p>
-	</div>
-	<div class="w3-display-bottommiddle" style="color: black">
-		<p class="p">
-			<input type="text" id="ifsccode" class="form-control"
-				style="width: 30%" required name="ifsccode" placeholder="Ifsc Code">
-		</p>
-	</div>
-	<div>
-		<a href="login.jsp" class="btn btn-primary btn-danger"
-			style="width: 20%"><span class="glyphicon glyphicon-chevron-left"></span>
-			Add</a>
-	</div>
+	</form>
 	<br />
 </body>
 </html>

@@ -31,6 +31,7 @@ public class AccountsServiceImpl implements AccountsService {
 		payee.setModifiedBy(payee.getUserId().getUserId());
 		payee.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
 		isadded = accountsDAO.addPayee(payee);
+		accountsDAO.commitTraction();
 		return isadded;
 	}
 
@@ -38,6 +39,18 @@ public class AccountsServiceImpl implements AccountsService {
 	public List<BankIfscCode> findAllBanks() {
 		List<BankIfscCode> bankNameList = accountsDAO.findAllBanks();
 		return bankNameList;
+	}
+
+	@Override
+	public List<BankIfscCode> findBranchByBank(String bankname) {
+		List<BankIfscCode> branchList = accountsDAO.findBranchByBank(bankname);
+		return branchList;
+	}
+
+	@Override
+	public List<Payee> findAllPayee() {
+		List<Payee> payeeList=accountsDAO.findAllPayee();
+		return payeeList;
 	}
 
 }

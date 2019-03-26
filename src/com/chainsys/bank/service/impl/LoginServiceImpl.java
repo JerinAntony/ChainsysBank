@@ -112,4 +112,10 @@ public class LoginServiceImpl implements LoginService {
 		Users userlogin = loginDAO.checkLoginId(loginid);
 		return userlogin;
 	}
+
+	@Override
+	public Users getUser(long userid) {
+		Users user = loginDAO.getUser(userid);
+		return user;
+	}
 }
