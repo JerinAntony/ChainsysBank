@@ -15,7 +15,7 @@ modified_date TIMESTAMP);
 
 --------------------------------------
 
-CREATE TABLE TRN_CITY
+CREATE TABLE CITY
 (city_id NUMBER(10) CONSTRAINT trn_city_id_pk PRIMARY KEY,
 city_name VARCHAR2(50) CONSTRAINT city_name_uk UNIQUE NOT NULL,
 pincode NUMBER(6) CONSTRAINT pincode_uk UNIQUE NOT NULL);
@@ -118,3 +118,16 @@ modified_by NUMBER(10),
 modified_date TIMESTAMP);
 
 -----------------------------------------
+
+CREATE TABLE trn_bank_ifsc_code( 
+id number(10) primary key not null,
+bank varchar2(150),
+ifsccode varchar2(150),
+branch varchar2(150),
+address varchar2(255),
+city varchar2(150),
+district varchar2(150),
+state varchar2(150)
+);
+
+--------------------------------------------
