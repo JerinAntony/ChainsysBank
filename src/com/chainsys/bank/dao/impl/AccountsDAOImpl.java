@@ -46,6 +46,7 @@ public class AccountsDAOImpl implements AccountsDAO {
 		return bankifsccode;
 	}
 
+	@Override
 	public boolean addPayee(Payee payee) {
 		boolean isSucess = false;
 		long userid = (long) session.save(payee);
@@ -57,6 +58,7 @@ public class AccountsDAOImpl implements AccountsDAO {
 		return isSucess;
 	}
 	
+	@Override
 	public boolean addUserTransaction(UsersTransanction usertransanction){
 		boolean isSucess=false;
 		long usertrans=(long) session.save(usertransanction);
@@ -66,6 +68,11 @@ public class AccountsDAOImpl implements AccountsDAO {
 			isSucess=false;
 		}
 		return isSucess;
+	}
+	
+	@Override
+	public void balanceAmountUpdate(Account accounts){
+		session.update(accounts);
 	}
 
 	@Override
@@ -77,6 +84,7 @@ public class AccountsDAOImpl implements AccountsDAO {
 		return payeeList;
 	}
 
+	@Override
 	public List<BankIfscCode> findAllBanks() {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

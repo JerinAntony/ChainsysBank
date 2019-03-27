@@ -29,10 +29,10 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		//long userid = (long) session.getAttribute("USERID");
+		long userid = (long) session.getAttribute("USERID");
 		KnowYourCustomerService kyvService = new KnowYourCustomerServiceImpl();
-		Profile profile = kyvService.profileView(28);
-		CurrentAddress currentAddress=kyvService.userCurrentAddress(28);
+		Profile profile = kyvService.profileView(userid);
+		CurrentAddress currentAddress=kyvService.userCurrentAddress(userid);
 		request.setAttribute("PROFILE", profile);
 		request.setAttribute("CURRENTADDRESS", currentAddress);
 		RequestDispatcher rd = request.getRequestDispatcher("profile.jsp");

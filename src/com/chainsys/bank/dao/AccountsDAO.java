@@ -18,4 +18,5 @@ public interface AccountsDAO {
 	void commitTraction();
 	boolean addUserTransaction(UsersTransanction usertransanction);
 	Account findUserAccount(Users user);
+	void balanceAmountUpdate(Account accounts);
 }

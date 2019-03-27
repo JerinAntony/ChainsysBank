@@ -20,7 +20,9 @@ public interface AccountsService {
 	
 	List<Payee> findAllPayee();
 	
-	boolean addUserTransaction(UsersTransanction usertransanction);
+	boolean addUserTransaction(Account accounts,UsersTransanction usertransanction);
 	
 	Account findUserAccount(Users user);
+	
+	void balanceAmountUpdate(Account accounts,UsersTransanction userstrans);
 }

@@ -73,7 +73,8 @@ public class FundTransfer extends HttpServlet {
 		Account account = accountservice.findUserAccount(user);
 		userstransanction.setAccountsId(account);
 		userstransanction.setRemarks(remark);
-		if (accountservice.addUserTransaction(userstransanction)) {
+		if (accountservice.addUserTransaction(account,userstransanction)) {
+			//accountservice.balanceAmountUpdate(account,userstransanction);
 			String message = "Transanction Sucessful";
 			request.setAttribute("MESSAGE", message);
 			doGet(request, response);

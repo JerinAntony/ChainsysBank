@@ -1,5 +1,6 @@
 package com.chainsys.bank.service.impl;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -54,26 +55,45 @@ public class AccountsServiceImpl implements AccountsService {
 
 	@Override
 	public List<Payee> findAllPayee() {
-		List<Payee> payeeList=accountsDAO.findAllPayee();
+		List<Payee> payeeList = accountsDAO.findAllPayee();
 		return payeeList;
 	}
 
 	@Override
-	public boolean addUserTransaction(UsersTransanction usertransanction) {
-		boolean isSucess=false;
-		usertransanction.setCreatedBy(usertransanction.getAccountsId().getUserId().getUserId());
+	public boolean addUserTransaction(Account accounts,
+			UsersTransanction usertransanction) {
+		boolean isSucess = false;
+		usertransanction.setCreatedBy(usertransanction.getAccountsId()
+				.getUserId().getUserId());
 		usertransanction.setCreatedDate(Timestamp.valueOf(LocalDateTime.now()));
-		usertransanction.setModifiedBy(usertransanction.getAccountsId().getUserId().getUserId());
-		usertransanction.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
-		isSucess=accountsDAO.addUserTransaction(usertransanction);
+		usertransanction.setModifiedBy(usertransanction.getAccountsId()
+				.getUserId().getUserId());
+		usertransanction
+				.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
+		isSucess = accountsDAO.addUserTransaction(usertransanction);
+		balanceAmountUpdate(accounts, usertransanction);
 		accountsDAO.commitTraction();
 		return isSucess;
 	}
 
 	@Override
 	public Account findUserAccount(Users user) {
-		Account account=accountsDAO.findUserAccount(user);
+		Account account = accountsDAO.findUserAccount(user);
 		return account;
+	}
+
+	@Override
+	public void balanceAmountUpdate(Account accounts,
+			UsersTransanction userstrans) {
+		if (accounts != null) {
+			double amount = accounts.getBalance().doubleValue()
+					- userstrans.getAmount().doubleValue();
+			accounts.setBalance(BigDecimal.valueOf(amount));
+			accounts.setModifiedBy(userstrans.getModifiedBy());
+			accounts.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
+			accountsDAO.balanceAmountUpdate(accounts);
+		}
+
 	}
 
 }
