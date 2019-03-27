@@ -1,5 +1,6 @@
 package com.chainsys.bank.model;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -22,6 +23,9 @@ public class UsersTransanction {
 	
 	@Column(name="remark")
 	private String remarks;
+	
+	@Column(name="amount")
+	private BigDecimal amount;
 	
 	@OneToOne
 	@JoinColumn(name="account_id")
@@ -80,6 +84,16 @@ public class UsersTransanction {
 	public void setToAccount(Payee toAccount) {
 		this.toAccount = toAccount;
 	}
+	
+	
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
 
 	public String getTranasctionMode() {
 		return tranasctionMode;
@@ -132,14 +146,15 @@ public class UsersTransanction {
 	@Override
 	public String toString() {
 		return "UsersTransanction [transId=" + transId + ", remarks=" + remarks
-				+ ", accountsId=" + accountsId + ", toAccount=" + toAccount
-				+ ", tranasctionMode=" + tranasctionMode
-				+ ", tranasctionStatus=" + tranasctionStatus + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", modifiedBy="
-				+ modifiedBy + ", modifiedDate=" + modifiedDate + "]";
+				+ ", amount=" + amount + ", accountsId=" + accountsId
+				+ ", toAccount=" + toAccount + ", tranasctionMode="
+				+ tranasctionMode + ", tranasctionStatus=" + tranasctionStatus
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", modifiedBy=" + modifiedBy + ", modifiedDate="
+				+ modifiedDate + "]";
 	}
-	
-	
+
+
 	
 	
 }

@@ -27,5 +27,6 @@
 		<mapping class="com.chainsys.bank.model.Account" />
 		<mapping class="com.chainsys.bank.model.BankIfscCode" />
 		<mapping class="com.chainsys.bank.model.Payee" />
+		<mapping class="com.chainsys.bank.model.UsersTransanction" />
 	</session-factory>
 </hibernate-configuration>

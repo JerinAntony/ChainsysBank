@@ -72,59 +72,70 @@ input[type=text], select {
 	<div class="w3-display-bottommiddle" style="color: black">
 		<p class="p"></p>
 	</div>
+	<form action="FundTransfer" method="post">
+		<table width="100%">
+			<tr>
+				<td width="8%">
+					<div style="font-weight: bold">Payee :</div>
+				</td>
+				<td width="30%"><select name="payee" id="payee" required>
+						<option value="">Select Payee</option>
+						<c:forEach var="payee" items="${PAYEE}">
+							<option value="${payee.payeeId}">${payee.holderName}-${payee.accountNo}</option>
+						</c:forEach>
+				</select></td>
+				<td width="62%">
+					<div class="col-sm-4">
+						<a href="PayeeServlet" class="btn btn-primary btn-danger"><span
+							class="glyphicon glyphicon-chevron-left"></span> Add Payee</a>
+					</div>
+				</td>
 
-	<div class="row">
-		<div class="col-sm-4" style="color: black">
-			<p class="p">
-				<span style="font-weight: bold">Payee : </span> <select name="payee"
-					id="payee" style="width: 80%" required>
-					<option value="">Select Payee</option>
-					<c:forEach var="payee" items="${PAYEE}">
-						<option value="${payee.payeeId}">${payee.holderName}-${payee.accountNo}</option>
-					</c:forEach>
-				</select>
+			</tr>
 
-			</p>
-		</div>
 
-		<div class="col-sm-4">
-			<a href="PayeeServlet" class="btn btn-primary btn-danger"><span
-				class="glyphicon glyphicon-chevron-left"></span> Add Payee</a>
-		</div>
-	</div>
-	<div class="w3-display-bottommiddle" style="color: black">
-		<p class="p">
-			<span style="font-weight: bold">Amount : <input type="text"
-				id="amount" class="form-control" style="width: 30%" required
-				name="amount" placeholder="Amount"></span>
-		</p>
-	</div>
-	<div class="w3-display-bottommiddle" style="color: black">
-		<p class="p">
-			<span style="font-weight: bold">Remarks : <input type="text"
-				id="remark" class="form-control" style="width: 30%" required
-				name="remark" placeholder="Enter Remarks"></span>
-		</p>
-	</div>
-	<div class="form-row">
-		<span style="font-weight: bold" class="p">Trans Mode :</span>
-		<div class="form-check form-check-inline">
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
-				type="radio" class="form-check-input" id="transactionmode"
-				name="transactionmode" value="NEFT"> <label
-				class="form-check-label" for="materialInline1">NEFT</label>
-		</div>
-		<div class="form-check form-check-inline">
-			<input type="radio" class="form-check-input" id="transactionmode"
-				name="transactionmode" value="IMPS"> <label
-				class="form-check-label" for="gender">IMPS</label>
-		</div>
+			<tr>
+				<td width="8%"><div style="font-weight: bold">Amount :</div></td>
+				<td width="30%"><input type="text" id="amount"
+					class="form-control" required name="amount" placeholder="Amount"></td>
+				<td width="62%"></td>
+			</tr>
+			<tr>
+				<td width="8%"><div style="font-weight: bold">Remarks :</div></td>
+				<td width="30%"><input type="text" id="remark"
+					class="form-control" required name="remark"
+					placeholder="Enter Remarks"></td>
+				<td width="62%"></td>
+			</tr>
+			<tr>
+				<td width="9%"><div
+						style="font-weight: bold;">Trans
+						Mode :</div></td>
+				<td width="30%">
+					<div class="form-check form-check-inline">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" class="form-check-input" id="transactionmode"
+							name="transactionmode" value="NEFT"> <label
+							class="form-check-label" for="materialInline1">NEFT</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input type="radio" class="form-check-input" id="transactionmode"
+							name="transactionmode" value="IMPS"> <label
+							class="form-check-label" for="gender">IMPS</label>
+					</div>
+				</td>
+				<td width="62%"></td>
+			</tr>
+		</table>
 
-	</div>
-	<div>
-		<button type="submit" class="btn btn-primary btn-danger">Proceed</button>
-	</div>
-	<br />
+		<div class="p" style="color: red; font-family: Times New Roman">${MESSAGE}</div>
+		<br />
+		<div style="padding-left: 10%">
+			<button type="submit" class="btn btn-primary btn-danger">Proceed</button>
+		</div>
+		<br />
+
+	</form>
 
 	<div class="row">
 		<div class="col-sm-4" style="color: black">

@@ -1,11 +1,12 @@
 package com.chainsys.bank.service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 
+import com.chainsys.bank.model.Account;
 import com.chainsys.bank.model.BankIfscCode;
 import com.chainsys.bank.model.Payee;
+import com.chainsys.bank.model.Users;
+import com.chainsys.bank.model.UsersTransanction;
 
 public interface AccountsService {
 
@@ -19,5 +20,7 @@ public interface AccountsService {
 	
 	List<Payee> findAllPayee();
 	
+	boolean addUserTransaction(UsersTransanction usertransanction);
 	
+	Account findUserAccount(Users user);
 }

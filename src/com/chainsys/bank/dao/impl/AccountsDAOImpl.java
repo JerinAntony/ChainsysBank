@@ -4,18 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import com.chainsys.bank.dao.AccountsDAO;
+import com.chainsys.bank.model.Account;
 import com.chainsys.bank.model.BankIfscCode;
-import com.chainsys.bank.model.City;
 import com.chainsys.bank.model.Payee;
+import com.chainsys.bank.model.Users;
+import com.chainsys.bank.model.UsersTransanction;
 import com.chainsys.bank.util.ConnectionUtil;
 import com.chainsys.bank.util.HibernateUtil;
 
@@ -53,6 +53,17 @@ public class AccountsDAOImpl implements AccountsDAO {
 			isSucess = true;
 		} else {
 			isSucess = false;
+		}
+		return isSucess;
+	}
+	
+	public boolean addUserTransaction(UsersTransanction usertransanction){
+		boolean isSucess=false;
+		long usertrans=(long) session.save(usertransanction);
+		if(usertrans>0){
+			isSucess=true;
+		}else{
+			isSucess=false;
 		}
 		return isSucess;
 	}
@@ -99,8 +110,25 @@ public class AccountsDAOImpl implements AccountsDAO {
 		return branchList;
 	}
 
+	@Override
 	public void commitTraction() {
 		session.getTransaction().commit();
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public Account findUserAccount(Users user) {
+		Account account=null;
+		Query<Account> query = session
+				.createQuery("from Account where userId.userId=:userid");
+		query.setParameter("userid", user.getUserId());
+		List<Account> accountList = query.list();
+		if(!accountList.isEmpty() && accountList!=null){
+			account= new Account();
+			account=query.list().get(0);
+		}
+		return account;
+	}
+	
 
 }

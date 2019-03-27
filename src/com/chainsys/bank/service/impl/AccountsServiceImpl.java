@@ -7,10 +7,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
+import javax.transaction.UserTransaction;
+
 import com.chainsys.bank.dao.AccountsDAO;
 import com.chainsys.bank.dao.impl.AccountsDAOImpl;
+import com.chainsys.bank.model.Account;
 import com.chainsys.bank.model.BankIfscCode;
 import com.chainsys.bank.model.Payee;
+import com.chainsys.bank.model.Users;
+import com.chainsys.bank.model.UsersTransanction;
 import com.chainsys.bank.service.AccountsService;
 
 public class AccountsServiceImpl implements AccountsService {
@@ -51,6 +56,24 @@ public class AccountsServiceImpl implements AccountsService {
 	public List<Payee> findAllPayee() {
 		List<Payee> payeeList=accountsDAO.findAllPayee();
 		return payeeList;
+	}
+
+	@Override
+	public boolean addUserTransaction(UsersTransanction usertransanction) {
+		boolean isSucess=false;
+		usertransanction.setCreatedBy(usertransanction.getAccountsId().getUserId().getUserId());
+		usertransanction.setCreatedDate(Timestamp.valueOf(LocalDateTime.now()));
+		usertransanction.setModifiedBy(usertransanction.getAccountsId().getUserId().getUserId());
+		usertransanction.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
+		isSucess=accountsDAO.addUserTransaction(usertransanction);
+		accountsDAO.commitTraction();
+		return isSucess;
+	}
+
+	@Override
+	public Account findUserAccount(Users user) {
+		Account account=accountsDAO.findUserAccount(user);
+		return account;
 	}
 
 }
