@@ -13,11 +13,14 @@ created_date TIMESTAMP,
 modified_by NUMBER(10),
 modified_date TIMESTAMP);
 
+--------------------------------------
+
 CREATE TABLE TRN_CITY
 (city_id NUMBER(10) CONSTRAINT trn_city_id_pk PRIMARY KEY,
 city_name VARCHAR2(50) CONSTRAINT city_name_uk UNIQUE NOT NULL,
 pincode NUMBER(6) CONSTRAINT pincode_uk UNIQUE NOT NULL);
 
+-------------------------------------------
 
 CREATE TABLE TRN_PRMT_ADDRS
 (prmt_addrs_id NUMBER(10) CONSTRAINT trn_prmt_addrs_id_pk PRIMARY KEY,
@@ -30,6 +33,8 @@ created_date TIMESTAMP,
 modified_by NUMBER(10),
 modified_date TIMESTAMP);
 
+-------------------------------------------
+
 CREATE TABLE TRN_CURT_ADDRS
 (curt_addrs_id NUMBER(10) CONSTRAINT trn_curt_addrs_id_pk PRIMARY KEY,
 user_id NUMBER(10),
@@ -41,6 +46,7 @@ created_date TIMESTAMP,
 modified_by NUMBER(10),
 modified_date TIMESTAMP);
 
+-----------------------------------------------
 
 CREATE TABLE TRN_USER_VERFCTN
 (user_verfctn_id NUMBER(10) CONSTRAINT trn_user_verfctn_id_pk PRIMARY KEY,
@@ -52,6 +58,7 @@ created_date TIMESTAMP,
 modified_by NUMBER(10),
 modified_date TIMESTAMP);
 
+-------------------------------------------------
 
 CREATE TABLE TRN_ACCOUNT
 (account_id NUMBER(10) CONSTRAINT trn_account_id_pk PRIMARY KEY,
@@ -64,6 +71,8 @@ created_by NUMBER(10),
 created_date TIMESTAMP,
 modified_by NUMBER(10),
 modified_date TIMESTAMP);
+
+-------------------------------------------------
 
 Alter table TRN_ACCOUNT modify account_no varchar2(50);
 
@@ -85,15 +94,17 @@ modified_date TIMESTAMP);
 CREATE TABLE TRN_USER_TRNSCN
 (user_trnscn_id NUMBER CONSTRAINT trn_user_trnscn_id_pk PRIMARY KEY,
 remark VARCHAR2(100),
-account_id NUMBER NOT NULL CONSTRAINT fk_user_trnscn_account REFERENCES TRN_ACCOUNT(account_id),
-to_account NUMBER NOT NULL CONSTRAINT fk_payee_account REFERENCES TRN_PAYEE(payee_id),
+account_id NUMBER(10),
+to_account NUMBER(10),
 amount NUMBER(10,2) NOT NULL,
-trans_mode NUMBER NOT NULL CONSTRAINT fk_trans_mode REFERENCES TRN_MODE(mode_id),
-trans_status VARCHAR2(10) NOT NULL CONSTRAINT fk_trans_status REFERENCES TRN_STATUS(status_id),
-created_by NUMBER,
+trans_mode VARCHAR2(50),
+trans_status VARCHAR2(50),
+created_by NUMBER(10),
 created_date TIMESTAMP,
-updated_by NUMBER,
-updated_date TIMESTAMP);
+modified_by NUMBER(10),
+modified_date TIMESTAMP);
+
+-------------------------------------------------
 
 CREATE TABLE TRN_PAYEE
 (payee_id NUMBER(10) CONSTRAINT trn_payee_id_pk PRIMARY KEY,
@@ -106,19 +117,4 @@ created_date TIMESTAMP,
 modified_by NUMBER(10),
 modified_date TIMESTAMP);
 
-
-
-CREATE TABLE TRN_USER_LOAN
-(user_loan_id NUMBER CONSTRAINT trn_user_loan_id_pk PRIMARY KEY,
-user_id NUMBER CONSTRAINT fk_user_loan_userid REFERENCES TRN_USERS(users_id),
-loan_type VARCHAR2(15) NOT NULL,
-loan_account_no VARCHAR2(15) NOT NULL,
-amount NUMBER(10,2) NOT NULL,
-outstanding_balance NUMBER(10,2) NOT NULL,
-interest NUMBER(10,2) NOT NULL,
-period NUMBER(10,2) NOT NULL,
-monthly_pay NUMBER(10,2) NOT NULL,
-created_by NUMBER,
-created_date TIMESTAMP,
-updated_by NUMBER,
-updated_date TIMESTAMP);
+-----------------------------------------
