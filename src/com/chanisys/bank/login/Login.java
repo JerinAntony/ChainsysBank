@@ -42,6 +42,7 @@ public class Login extends HttpServlet {
 					
 					HttpSession session = request.getSession();
 					session.setAttribute("USERID", checkValiduser.getUserId());
+					session.setAttribute("USERNAME", checkValiduser.getFirstName());
 					loginservice.addVerification(checkValiduser);
 					RequestDispatcher rd = request
 							.getRequestDispatcher("authentication.jsp");

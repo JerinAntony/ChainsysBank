@@ -145,7 +145,7 @@ input[type=text], select {
 		</div>
 		<div class="col-sm-4" style="color: black">
 			<p class="p">Available Balance</p>
-			<p class="p">123455</p>
+			<p class="p">${BALANCE}</p>
 		</div>
 
 	</div>

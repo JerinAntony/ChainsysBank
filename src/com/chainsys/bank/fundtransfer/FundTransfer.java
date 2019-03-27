@@ -27,7 +27,7 @@ import com.chainsys.bank.service.impl.LoginServiceImpl;
 @WebServlet("/FundTransfer")
 public class FundTransfer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	AccountsService accountservice = new AccountsServiceImpl();
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -39,6 +39,12 @@ public class FundTransfer extends HttpServlet {
 		AccountsService accountservice = new AccountsServiceImpl();
 		List<Payee> payeeList = accountservice.findAllPayee();
 		request.setAttribute("PAYEE", payeeList);
+		HttpSession session = request.getSession(false);
+		long userid = (long) session.getAttribute("USERID");
+		LoginService loginservice = new LoginServiceImpl();
+		Users users = loginservice.getUser(userid);
+		Account account = accountservice.findUserAccount(users);
+		request.setAttribute("BALANCE", account.getBalance());
 		RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
 		rd.forward(request, response);
 	}
@@ -64,7 +70,6 @@ public class FundTransfer extends HttpServlet {
 		userstransanction.setAmount(BigDecimal.valueOf(amount));
 		userstransanction.setTranasctionMode(transanctionmode);
 		userstransanction.setTranasctionStatus("Transanction Approved");
-		AccountsService accountservice = new AccountsServiceImpl();
 		Account account = accountservice.findUserAccount(user);
 		userstransanction.setAccountsId(account);
 		userstransanction.setRemarks(remark);

@@ -31,9 +31,11 @@ public class Authentication extends HttpServlet {
 		LoginService loginservice = new LoginServiceImpl();
 		HttpSession session = request.getSession(false);
 		long userid = (long) session.getAttribute("USERID");
+		String username=(String) session.getAttribute("USERNAME");
 		Verification verification = loginservice.verifySecurityCode(Long
 				.parseLong(securityCode));
 		if (verification != null) {
+			request.setAttribute("NAME", username);
 			RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
 			rd.forward(request, response);
 		} else {

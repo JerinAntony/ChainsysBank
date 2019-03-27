@@ -5,16 +5,11 @@
 <html>
 <head>
 <!-- Font Awesome -->
-<link rel="stylesheet"
-	href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
-<link
-	href="css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link
-	href="css/mdb.min.css"
-	rel="stylesheet">
+<link href="css/mdb.min.css" rel="stylesheet">
 
 <meta charset="ISO-8859-1">
 <title>Home</title>
@@ -93,9 +88,11 @@ html, body {
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a>Welcome Jerin !!!</a></li>
+				<li class="nav-item active"><a>Welcome ${NAME}!!!</a></li>
 			</ul>
-
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><img style="width:100;height:30" src="image/bankimage.png"></li>
+			</ul>
 			<ul class="navbar-nav nav-flex-icons">
 				<li class="nav-item">
 					<form action="LogoutServlet" method="post">
