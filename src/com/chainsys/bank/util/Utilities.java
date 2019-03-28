@@ -1,5 +1,7 @@
 package com.chainsys.bank.util;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import org.apache.commons.mail.DefaultAuthenticator;
@@ -106,5 +108,14 @@ public class Utilities {
 		}
 		return strText.substring(0, start) + sbMaskString.toString()
 				+ strText.substring(start + maskLength);
+	}
+
+	public static Date timeConvertion(Date fromdate) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(fromdate);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		return c.getTime();
 	}
 }

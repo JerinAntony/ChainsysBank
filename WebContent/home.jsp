@@ -115,7 +115,7 @@ html, body {
 			<a href="HomeServlet" id="Lnav"
 				class="list-group-item list-group-item-action waves-effect"> <i
 				class="fa fa-user-o"> </i>&nbsp;&nbsp;Profile
-			</a> <a href="#" id="Anav"
+			</a> <a href="AccountSummary" id="Anav"
 				class="list-group-item list-group-item-action waves-effect"> <i
 				class="fa fa-th-list"></i>&nbsp;&nbsp;Account Summary
 			</a> <a href="FundTransfer" id="Snav"
@@ -123,10 +123,10 @@ html, body {
 				class="	fa fa-send"></i>&nbsp;&nbsp; Fund Transfer
 			</a> <a href="#" id="Snav"
 				class="list-group-item list-group-item-action waves-effect"> <i
-				class="fa fa-money"></i>&nbsp;&nbsp; Bill Pay
+				class="fa fa-money"></i>&nbsp;&nbsp; Bill Pay(Features)
 			</a> <a href="#" id="Snav"
 				class="list-group-item list-group-item-action waves-effect"> <i
-				class="	fa fa-asl-interpreting"></i>&nbsp;&nbsp; Loan
+				class="	fa fa-asl-interpreting"></i>&nbsp;&nbsp; Loan(Features)
 			</a>
 		</div>
 	</div>
@@ -141,6 +141,10 @@ html, body {
 		</c:if>
 		<c:if test="${PAYEEPAGE!=null}">
 			<%@ include file="payee.jsp"%>
+		</c:if>
+		
+		<c:if test="${SUMMARYPAGE!=null}">
+			<%@ include file="accounts_summary.jsp"%>
 		</c:if>
 	</div>
 	<div class="footer">

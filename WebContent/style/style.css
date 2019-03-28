@@ -20,3 +20,10 @@ p {
 	font-family: Times New Roman;
 }
 
+.divsummary {
+  background-color: white;
+  width: 500px;
+  border: 10px solid #408080;
+  padding: 20px;
+  margin: 15px;
+}

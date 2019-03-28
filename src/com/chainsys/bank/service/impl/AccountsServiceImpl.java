@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
@@ -94,6 +95,13 @@ public class AccountsServiceImpl implements AccountsService {
 			accountsDAO.balanceAmountUpdate(accounts);
 		}
 
+	}
+
+	@Override
+	public List<UsersTransanction> findAccountsSummary(Date from, Date to) {
+		List<UsersTransanction> summaryList = accountsDAO.findAccountsSummary(
+				from, to);
+		return summaryList;
 	}
 
 }

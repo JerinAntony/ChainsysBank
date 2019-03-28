@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -136,6 +137,18 @@ public class AccountsDAOImpl implements AccountsDAO {
 			account=query.list().get(0);
 		}
 		return account;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UsersTransanction> findAccountsSummary(Date from,Date to) {
+		Query<UsersTransanction> query = session
+				.createQuery("from UsersTransanction where createdDate BETWEEN :from AND :to");
+		query.setParameter("from", from);
+		query.setParameter("to", to);
+		List<UsersTransanction> summaryList = query.list();
+		return summaryList;
 	}
 	
 

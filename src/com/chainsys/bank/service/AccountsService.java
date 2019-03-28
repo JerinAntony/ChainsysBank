@@ -1,5 +1,6 @@
 package com.chainsys.bank.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.chainsys.bank.model.Account;
@@ -25,4 +26,6 @@ public interface AccountsService {
 	Account findUserAccount(Users user);
 	
 	void balanceAmountUpdate(Account accounts,UsersTransanction userstrans);
+	
+	List<UsersTransanction> findAccountsSummary(Date from,Date to);
 }

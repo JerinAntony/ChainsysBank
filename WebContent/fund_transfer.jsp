@@ -6,7 +6,7 @@
 <head>
 <link rel="stylesheet" href="style/style.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>footer</title>
+<title>Fund Transfer</title>
 <style>
 h1 {
 	font-family: 'Kaushan Script', cursive;
@@ -61,6 +61,7 @@ input[type=text], select {
 	box-sizing: border-box;
 }
 </style>
+
 </head>
 <body>
 	<div class="w3-display-bottommiddle"
@@ -73,7 +74,7 @@ input[type=text], select {
 		<p class="p"></p>
 	</div>
 	<form action="FundTransfer" method="post">
-		<table width="100%">
+		<table width="100%" id=table>
 			<tr>
 				<td width="8%">
 					<div style="font-weight: bold">Payee :</div>
@@ -108,9 +109,8 @@ input[type=text], select {
 				<td width="62%"></td>
 			</tr>
 			<tr>
-				<td width="9%"><div
-						style="font-weight: bold;">Trans
-						Mode :</div></td>
+				<td width="9%"><div style="font-weight: bold;">Trans Mode
+						:</div></td>
 				<td width="30%">
 					<div class="form-check form-check-inline">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -1,5 +1,6 @@
 package com.chainsys.bank.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.chainsys.bank.model.Account;
@@ -19,4 +20,5 @@ public interface AccountsDAO {
 	boolean addUserTransaction(UsersTransanction usertransanction);
 	Account findUserAccount(Users user);
 	void balanceAmountUpdate(Account accounts);
+	List<UsersTransanction> findAccountsSummary(Date from,Date to);
 }
