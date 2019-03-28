@@ -91,7 +91,12 @@ html, body {
 				<li class="nav-item active"><a>Welcome ${NAME}!!!</a></li>
 			</ul>
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><img style="width:100;height:30" src="image/bankimage.png"></li>
+				<li class="nav-item active"><img style="width: 100; height: 30"
+					src="image/bankimage.png"></li>
+			</ul>
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><img src="image/man.jpg"
+					class="img-circle" alt="Cinque Terre" width="80" height="50"></li>
 			</ul>
 			<ul class="navbar-nav nav-flex-icons">
 				<li class="nav-item">
@@ -142,7 +147,7 @@ html, body {
 		<c:if test="${PAYEEPAGE!=null}">
 			<%@ include file="payee.jsp"%>
 		</c:if>
-		
+
 		<c:if test="${SUMMARYPAGE!=null}">
 			<%@ include file="accounts_summary.jsp"%>
 		</c:if>

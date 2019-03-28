@@ -40,11 +40,13 @@ public class FundTransfer extends HttpServlet {
 		List<Payee> payeeList = accountservice.findAllPayee();
 		request.setAttribute("PAYEE", payeeList);
 		HttpSession session = request.getSession(false);
+		String name=(String) session.getAttribute("USERNAME");
 		long userid = (long) session.getAttribute("USERID");
 		LoginService loginservice = new LoginServiceImpl();
 		Users users = loginservice.getUser(userid);
 		Account account = accountservice.findUserAccount(users);
 		request.setAttribute("BALANCE", account.getBalance());
+		request.setAttribute("NAME", name);
 		RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
 		rd.forward(request, response);
 	}
