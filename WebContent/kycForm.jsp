@@ -1,20 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <!-- Font Awesome -->
-<link rel="stylesheet"
-	href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
-<link
-	href="css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link
-	href="css/mdb.min.css"
-	rel="stylesheet">
+<link href="css/mdb.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.10.2.js"
+	type="text/javascript"></script>
 <meta charset="ISO-8859-1">
 
 
@@ -68,6 +65,9 @@ h1 {
 	font-size: 15px
 }
 </style>
+<script  src="js/kyc.js" type="text/javascript">
+
+</script>
 </head>
 
 <body>
@@ -99,13 +99,18 @@ h1 {
 							<!-- Default input -->
 							<div class="md-form">
 								<i class="fa fa-user fa-2x prefix"></i> <input type="text"
+									onkeypress="return (event.charCode > 64 && 
+	event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
 									id="FirstName" class="form-control" required name="firstName"
 									placeholder="First Name">
 							</div>
 							<!-- Default input -->
 							<div class="md-form">
 								<i class="fa fa-flighter-jet prefix" aria-hidden="true"></i> <input
-									type="text" id="LastName" class="form-control" name="lastName"
+									type="text"
+									onkeypress="return (event.charCode > 64 && 
+	event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
+									id="LastName" class="form-control" name="lastName"
 									placeholder="Last Name">
 							</div>
 						</div>
@@ -114,6 +119,8 @@ h1 {
 							<!-- Default input -->
 							<div class="md-form">
 								<i class="fa fa-user fa-2x prefix"></i> <input type="text"
+									onkeypress="return (event.charCode > 64 && 
+	event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
 									id="SurName" class="form-control" required name="surName"
 									placeholder="Sur Name">
 							</div>
@@ -155,11 +162,14 @@ h1 {
 									required type="date" id="LeaveDate" name="DateofBirth"
 									class="form-control">
 							</div>
+
 						</div>
 						<div class="form-row">
 							<!-- Default input -->
 							<div class="md-form">
 								<i class="fa fa-briefcase fa-2x prefix"></i> <input type="text"
+									onkeypress="return (event.charCode > 64 && 
+	event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
 									id="Occupation" class="form-control" required name="occupation"
 									placeholder="Occupation Name">
 							</div>
@@ -169,8 +179,10 @@ h1 {
 							<div class="md-form">
 								<i class="fa fa-vcard fa-2x prefix"></i> <input type="text"
 									id="AadharNumber" class="form-control" required
+									onkeypress="allowNumbersOnly(event)"
 									name="aadharNumber" placeholder="Aadhar Number">
 							</div>
+							<div id="error"></div>
 							<div class="md-form">
 								<i class="fa fa-flighter-jet prefix" aria-hidden="true"></i> <input
 									type="text" id="PanNumber" class="form-control" required
@@ -215,6 +227,8 @@ h1 {
 							<!-- Default input -->
 							<div class="md-form">
 								<i class="fa fa-info fa-2x prefix"></i><input type="text"
+									onkeypress="return (event.charCode > 64 && 
+	event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
 									id="City" class="form-control" required placeholder="City"
 									name="city">
 							</div>
@@ -255,6 +269,7 @@ h1 {
 							<!-- Default input -->
 							<div class="md-form">
 								<i class="fa fa-info fa-2x prefix"></i> <input type="text"
+									onkeypress="return (event.charCode >64 && event.charCode<91) || (event.charCode >96 && event.charCode <123)"
 									id="City" class="form-control" placeholder="City"
 									name="currentCity">
 							</div>
@@ -273,8 +288,7 @@ h1 {
 									<i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;Submit
 								</button>
 							</div>
-							<div>
-							${MESSAGE}</div>
+							<div>${MESSAGE}</div>
 						</div>
 					</form>
 				</div>

@@ -8,8 +8,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <script src="js/jquery.min.js"></script>
+<script src="js/kyc.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+
 <title>Fund Transfer</title>
 <style>
 h1 {
@@ -71,7 +75,7 @@ input[type=text], select {
 	width: 100%;
 }
 
-#customers td, #customers th {
+ #customers td, #customers th {
 	border: 1px solid #ddd;
 	padding: 8px;
 }
@@ -90,7 +94,7 @@ input[type=text], select {
 	text-align: left;
 	background-color: #4CAF50;
 	color: white;
-}
+} 
 </style>
 
 </head>
@@ -143,23 +147,27 @@ input[type=text], select {
 	<div>
 
 		<table border="2px" id="customers">
-			<tr>
-				<th>To Account</th>
-				<th>Amount</th>
-				<th>Mode</th>
-				<th>Status</th>
-				<th>Remark</th>
-			</tr>
-			<c:forEach items="${SUMMARY}" var="summary">
+			<thead>
 				<tr>
-					<td><c:out value="${summary.toAccount.accountNo}" /></td>
-					<td><c:out value="${summary.amount}" /></td>
-					<td><c:out value="${summary.tranasctionMode}" /></td>
-					<td><c:out value="${summary.tranasctionStatus}" /></td>
-					<td><c:out value="${summary.remarks}" /></td>
+					<th>To Account</th>
+					<th>Amount</th>
+					<th>Mode</th>
+					<th>Status</th>
+					<th>Remark</th>
 				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${SUMMARY}" var="summary">
+					<tr>
+						<td><c:out value="${summary.toAccount.accountNo}" /></td>
+						<td><c:out value="${summary.amount}" /></td>
+						<td><c:out value="${summary.tranasctionMode}" /></td>
+						<td><c:out value="${summary.tranasctionStatus}" /></td>
+						<td><c:out value="${summary.remarks}" /></td>
+					</tr>
 
-			</c:forEach>
+				</c:forEach>
+			</tbody>
 		</table>
 
 
