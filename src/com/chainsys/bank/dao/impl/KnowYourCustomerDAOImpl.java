@@ -194,7 +194,10 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 		//query.setParameter("emailid", profile.getUserId().getEmail());
 		query.setParameter("adhaarno", profile.getAadharNo());
 		query.setParameter("pancard", profile.getPancard());
-		userexists = query.list().get(0);
+		List<Profile> profileList = query.list();
+		if(profileList!=null && !profileList.isEmpty()){
+			userexists =query.list().get(0);
+		}
 		return userexists;
 	}
 
