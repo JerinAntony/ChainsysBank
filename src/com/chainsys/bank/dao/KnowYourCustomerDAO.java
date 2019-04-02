@@ -26,9 +26,13 @@ public interface KnowYourCustomerDAO {
 	
 	void commitTraction();
 	
-	void deleteUser(Users user);
-	
 	Profile findProfileDetails(long userid);
 	
 	CurrentAddress userCurrentAddress(long userid);
+	
+	boolean checkEmailAvailable(Users useremail);
+	
+	Profile checkExistingProfile(Profile profile);
+	
+	boolean checkExistingAccount(long userid, String accountstype);
 }

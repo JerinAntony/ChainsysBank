@@ -99,22 +99,43 @@ public class ServletProfile extends HttpServlet {
 		profile.setPancard(pancard);
 		Account accounts = new Account();
 		accounts.setAccountType(accounttype);
+		Profile profileobj = kycService.findProfile(profile);
 		try {
-			if (kycService.addKYCForm(user, prmtaddress, curntaddress, profile,
-					accounts)) {
-				String sucess = "<p style='color:green';'font-style: italic;'>Registration Sucessfully</p>";
-				request.setAttribute("MESSAGE", sucess);
-				RequestDispatcher rd = request
-						.getRequestDispatcher("kycForm.jsp");
-				rd.forward(request, response);
-			} else {
-				String failed = "<p style='color:red';'font-style: italic;'>Registration Failed</p>";
+			Profile userExists = kycService.checkExistingProfile(profile,
+					accounttype);
+			// check Aadharno/Pancard/Acocunt type to restrict duplication
+			if (userExists != null) {
+				String failed = "<p style='color:red';'font-style: italic;'>Account Already Exists</p>";
 				request.setAttribute("MESSAGE", failed);
 				RequestDispatcher rd = request
 						.getRequestDispatcher("kycForm.jsp");
 				rd.forward(request, response);
+			} else {
+				if ("Savings".equalsIgnoreCase(accounts.getAccountType())) {
+					if (kycService.addKYCForm(user, prmtaddress, curntaddress,
+							profile, accounts)) {
+						String sucess = "<p style='color:green';'font-style: italic;'>Registration Sucessfully</p>";
+						request.setAttribute("MESSAGE", sucess);
+						RequestDispatcher rd = request
+								.getRequestDispatcher("kycForm.jsp");
+						rd.forward(request, response);
+					} else {
+						String failed = "<p style='color:red';'font-style: italic;'>Registration Failed</p>";
+						request.setAttribute("MESSAGE", failed);
+						RequestDispatcher rd = request
+								.getRequestDispatcher("kycForm.jsp");
+						rd.forward(request, response);
+					}
+				} else {
+					kycService.createCurrentAccount(profileobj.getUserId(),
+							accounts);
+					String sucess = "<p style='color:green';'font-style: italic;'>Registration Sucessfully</p>";
+					request.setAttribute("MESSAGE", sucess);
+					RequestDispatcher rd = request
+							.getRequestDispatcher("kycForm.jsp");
+					rd.forward(request, response);
+				}
 			}
-
 		} catch (Exception e) {
 			String error = "<p style='color:red';'font-style: italic;'>"
 					+ e.getMessage() + "</p>";

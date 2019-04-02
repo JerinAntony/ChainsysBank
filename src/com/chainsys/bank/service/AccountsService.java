@@ -28,4 +28,5 @@ public interface AccountsService {
 	void balanceAmountUpdate(Account accounts,UsersTransanction userstrans);
 	
 	List<UsersTransanction> findAccountsSummary(Date from,Date to);
+	
 }

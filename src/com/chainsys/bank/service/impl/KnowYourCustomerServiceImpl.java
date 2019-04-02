@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 import com.chainsys.bank.constant.Constants;
 import com.chainsys.bank.dao.KnowYourCustomerDAO;
 import com.chainsys.bank.dao.impl.KnowYourCustomerDAOImpl;
@@ -102,11 +103,6 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 	}
 
 	@Override
-	public void deleteUser(Users user) {
-		kfcDAO.deleteUser(user);
-	}
-
-	@Override
 	public Profile profileView(long userid) {
 		Profile profile = kfcDAO.findProfileDetails(userid);
 		return profile;
@@ -116,6 +112,55 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 	public CurrentAddress userCurrentAddress(long userid) {
 		CurrentAddress currentAddress = kfcDAO.userCurrentAddress(userid);
 		return currentAddress;
+	}
+
+	@Override
+	public boolean checkEmailAvailable(Users useremail) {
+		boolean isAvailable = kfcDAO.checkEmailAvailable(useremail);
+		return isAvailable;
+	}
+
+	@Override
+	public Profile checkExistingProfile(Profile profile, String accountstype) {
+		Profile profile1 = kfcDAO.checkExistingProfile(profile);
+		boolean isAvailable = false;
+		Profile profileobj = null;
+		if (profile1 != null) {
+			isAvailable = kfcDAO.checkExistingAccount(profile1.getUserId()
+					.getUserId(), accountstype);
+		}
+			if (isAvailable) {
+				profileobj = new Profile();
+				profileobj = profile1;
+			}
+		
+		return profileobj;
+	}
+
+	@Override
+	public boolean checkExistingAccount(long userid, String accountstype) {
+		boolean isAvailable = kfcDAO.checkExistingAccount(userid, accountstype);
+		return isAvailable;
+	}
+
+	@Override
+	public void createCurrentAccount(Users user, Account accounts) {
+		accounts.setUserId(user);
+		accounts.setOpeningDate(LocalDate.now());
+		accounts.setAccountNo(String.valueOf(Utilities.getAccountno()));
+		accounts.setBalance(BigDecimal.ZERO);
+		accounts.setCreatedBy(user.getUserId());
+		accounts.setCreatedDate(Timestamp.valueOf(LocalDateTime.now()));
+		accounts.setModifiedBy(user.getUserId());
+		accounts.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
+		kfcDAO.insertAccount(accounts);
+		kfcDAO.commitTraction();
+	}
+
+	@Override
+	public Profile findProfile(Profile profile) {
+		Profile profileobj = kfcDAO.checkExistingProfile(profile);
+		return profileobj;
 	}
 
 }

@@ -14,11 +14,17 @@ public interface KnowYourCustomerService {
 
 	City findCity(City city);
 	
-	void deleteUser(Users user);
+	boolean checkEmailAvailable(Users useremail);
 	
 	Profile profileView(long userid);
 	
 	CurrentAddress userCurrentAddress(long userid);
 		
+	Profile checkExistingProfile(Profile profile,String accountstype);
 	
+	Profile findProfile(Profile profile);
+	
+	boolean checkExistingAccount(long userid, String accountstype);
+	
+	void createCurrentAccount(Users user,Account accounts);
 }

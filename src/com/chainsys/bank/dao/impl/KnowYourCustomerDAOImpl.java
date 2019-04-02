@@ -79,11 +79,6 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 		session.getTransaction().commit();
 	}
 
-	public void deleteUser(Users user) {
-		session.delete(user);
-		session.getTransaction().commit();
-	}
-
 	public City findCity(City city) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -171,6 +166,56 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 			e.printStackTrace();
 		}
 		return currentaddress;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean checkEmailAvailable(Users useremail) {
+		boolean isAvailable = false;
+		Users useremailexists = null;
+		Query<Users> query = session
+				.createQuery("from Users where email=:emailid");
+		query.setParameter("emailid", useremail.getEmail());
+		useremailexists = query.list().get(0);
+		if (useremailexists != null) {
+			isAvailable = true;
+		} else {
+			isAvailable = false;
+		}
+		return isAvailable;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Profile checkExistingProfile(Profile profile) {
+		Profile userexists = null;
+		Query<Profile> query = session
+				.createQuery("from Profile where aadharNo=:adhaarno and pancard=:pancard");
+		//query.setParameter("emailid", profile.getUserId().getEmail());
+		query.setParameter("adhaarno", profile.getAadharNo());
+		query.setParameter("pancard", profile.getPancard());
+		userexists = query.list().get(0);
+		return userexists;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean checkExistingAccount(long userid, String accountstype) {
+		System.out.println(accountstype);
+		boolean isAvailable = false;
+		Query<Account> query = session
+				.createQuery("from Account where userId.userId=:userid and accountType=:accounttype");
+		query.setParameter("userid", userid);
+		query.setParameter("accounttype", accountstype);
+		List<Account>accountList = query.list();
+		System.out.println(accountList);
+		if (accountList != null && !accountList.isEmpty()) {
+			isAvailable = true;
+		} else {
+			isAvailable = false;
+		}
+		System.out.println(isAvailable);
+		return isAvailable;
 	}
 
 }
