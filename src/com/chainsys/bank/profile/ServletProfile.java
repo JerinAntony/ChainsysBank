@@ -30,6 +30,7 @@ public class ServletProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
 		KnowYourCustomerService kycService = new KnowYourCustomerServiceImpl();
 		City findcity = null;
 		CurrentAddress curntaddress = null;
@@ -69,7 +70,7 @@ public class ServletProfile extends HttpServlet {
 		PermanentAddress prmtaddress = new PermanentAddress();
 		prmtaddress.setAddressLineone(permenantaddress1);
 		prmtaddress.setAddressLinetwo(permenantaddress2);
-		prmtaddress.setCityId(findcity);
+		prmtaddress.setCityId(findcity );
 		String addresssameas = request.getParameter("addresssameas");
 		// Same as Communication Copy current address from permanent address
 		if ("address".equals(addresssameas)) {

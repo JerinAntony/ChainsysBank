@@ -126,13 +126,14 @@ html, body {
 			</a> <a href="FundTransfer" id="Snav"
 				class="list-group-item list-group-item-action waves-effect"> <i
 				class="	fa fa-send"></i>&nbsp;&nbsp; Fund Transfer
-			</a> <a href="#" id="Snav"
+			</a>
+			<!-- <a href="#" id="Snav"
 				class="list-group-item list-group-item-action waves-effect"> <i
 				class="fa fa-money"></i>&nbsp;&nbsp; Bill Pay(Features)
 			</a> <a href="#" id="Snav"
 				class="list-group-item list-group-item-action waves-effect"> <i
 				class="	fa fa-asl-interpreting"></i>&nbsp;&nbsp; Loan(Features)
-			</a>
+			</a> -->
 		</div>
 	</div>
 	<!-- Sidebar --> </header>

@@ -46,10 +46,10 @@ public class Utilities {
 		email.setSmtpPort(587);
 
 		email.setAuthenticator(new DefaultAuthenticator(
-				"jerintonny25@gmail.com", "johnbosco"));
+				"chainsysbank@gmail.com", "chainsysbank@07"));
 		email.setDebug(true);
 		email.setHostName("smtp.gmail.com");
-		email.setFrom("jerintonny25@gmail.com");
+		email.setFrom("chainsysbank@gmail.com");
 		email.setSubject(subject);
 		email.setMsg(msg);
 		email.addTo(toemail);

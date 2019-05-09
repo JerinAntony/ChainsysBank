@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -30,49 +31,104 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 		// Create session factory object
 		sessionFactory = HibernateUtil.getSessionFactory();
 		// getting session object from session factory
-		session = sessionFactory.openSession();
-		// getting transaction object from session object
-		session.beginTransaction();
 	}
 
 	/**
 	 * @param user
 	 */
 	public boolean insertUsers(Users user) {
+		session = sessionFactory.openSession();
+		session.beginTransaction();
 		boolean isSucess = false;
-		long id = (long) session.save(user);
-		if (id > 0) {
-			isSucess = true;
-			System.out.println("Inserted Successfully");
-		} else {
-			isSucess = false;
+		try {
+			long id = (long) session.save(user);
+			if (id > 0) {
+				commitTraction();
+				isSucess = true;
+
+			} else {
+				isSucess = false;
+			}
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
 		}
 		return isSucess;
 	}
 
 	public void insertPermenantAddress(PermanentAddress prmtaddress) {
-		session.save(prmtaddress);
-		System.out.println("PermanentAddress Inserted Successfully");
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+		try {
+			session.save(prmtaddress);
+			commitTraction();
+			System.out.println("PermanentAddress Inserted Successfully");
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
+		}
 	}
 
 	public void insertCurrentAddress(CurrentAddress curntaddress) {
-		session.save(curntaddress);
-		System.out.println("CurrentAddress Inserted Successfully");
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+		try {
+			session.save(curntaddress);
+			commitTraction();
+			System.out.println("CurrentAddress Inserted Successfully");
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
+		}
 	}
 
 	public void insertProfile(Profile profile) {
-		session.save(profile);
-		System.out.println("Profile Inserted Successfully");
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+		try {
+			session.save(profile);
+			commitTraction();
+			System.out.println("CurrentAddress Inserted Successfully");
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
+		}
+
 	}
 
 	public void insertVerification(Verification verification) {
-		session.save(verification);
-		System.out.println("Verification Inserted Successfully");
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+		try {
+			session.save(verification);
+			commitTraction();
+			System.out.println("Verification Inserted Successfully");
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
+		}
+
 	}
 
 	public void insertAccount(Account account) {
-		session.save(account);
-		System.out.println("Account Inserted Successfully");
+		session = sessionFactory.openSession();
+		System.out.println(account.getBalance());
+		session.beginTransaction();
+		try {
+			session.save(account);
+			commitTraction();
+			System.out.println("Account Inserted Successfully");
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
+		}
+
 	}
 
 	public void commitTraction() {
@@ -110,11 +166,7 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 		Profile profile = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "Select u.first_name,u.middle_name,u.sur_name,u.phone_number,u.email,p.gender,p.date_of_birth,p.occupation,p.aadhar_no,p.pancard "
-					+ "from TRN_USERS u join TRN_PROFILE p on u.users_id=p.user_id"
-					+ " join TRN_CURT_ADDRS d on u.users_id=d.user_id "
-					+ "join CITY c on d.city_id=c.city_id"
-					+ " where u.users_id=?";
+			String sql = "Select u.first_name,u.middle_name,u.sur_name,u.phone_number,u.email,p.gender,p.date_of_birth,p.occupation,p.aadhar_no,p.pancard from TRN_USERS u join TRN_PROFILE p on u.users_id=p.user_id where u.users_id=?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setLong(1, userid);
 			resultSet = preparedStatement.executeQuery();
@@ -144,10 +196,10 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		CurrentAddress currentaddress = null;
+		CurrentAddress currentaddress = new CurrentAddress();
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "select d.address_one,d.address_two,c.location,c.pincode from TRN_CURT_ADDRS d join CITY c on d.city_id=c.city_id where d.user_id=?";
+			String sql = "select d.address_one as address_one,d.address_two as address_two,c.location as location,c.pincode as pincode from TRN_CURT_ADDRS d join CITY c on d.city_id=c.city_id where d.user_id=?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setLong(1, userid);
 			resultSet = preparedStatement.executeQuery();
@@ -155,7 +207,6 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 				City city = new City();
 				city.setLocation(resultSet.getString("location"));
 				city.setPinCode(resultSet.getLong("pincode"));
-				currentaddress = new CurrentAddress();
 				currentaddress.setCityId(city);
 				currentaddress.setAddressLineone(resultSet
 						.getString("address_one"));
@@ -171,32 +222,48 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean checkEmailAvailable(Users useremail) {
+		session = sessionFactory.openSession();
+		session.beginTransaction();
 		boolean isAvailable = false;
 		Users useremailexists = null;
-		Query<Users> query = session
-				.createQuery("from Users where email=:emailid");
-		query.setParameter("emailid", useremail.getEmail());
-		useremailexists = query.list().get(0);
-		if (useremailexists != null) {
-			isAvailable = true;
-		} else {
-			isAvailable = false;
+		try {
+			Query<Users> query = session
+					.createQuery("from Users where email=:emailid");
+			query.setParameter("emailid", useremail.getEmail());
+			useremailexists = query.list().get(0);
+			if (useremailexists != null) {
+				isAvailable = true;
+			} else {
+				isAvailable = false;
+			}
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
 		}
 		return isAvailable;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Profile checkExistingProfile(Profile profile) {
+		session = sessionFactory.openSession();
+		session.beginTransaction();
 		Profile userexists = null;
-		Query<Profile> query = session
-				.createQuery("from Profile where aadharNo=:adhaarno and pancard=:pancard");
-		//query.setParameter("emailid", profile.getUserId().getEmail());
-		query.setParameter("adhaarno", profile.getAadharNo());
-		query.setParameter("pancard", profile.getPancard());
-		List<Profile> profileList = query.list();
-		if(profileList!=null && !profileList.isEmpty()){
-			userexists =query.list().get(0);
+		try {
+			Query<Profile> query = session
+
+					.createQuery("from Profile where aadharNo=:adhaarno and pancard=:pancard");
+			query.setParameter("adhaarno", profile.getAadharNo());
+			query.setParameter("pancard", profile.getPancard());
+			List<Profile> profileList = query.list();
+			if (profileList != null && !profileList.isEmpty()) {
+				userexists = query.list().get(0);
+			}
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
 		}
 		return userexists;
 	}
@@ -205,19 +272,28 @@ public class KnowYourCustomerDAOImpl implements KnowYourCustomerDAO {
 	@Override
 	public boolean checkExistingAccount(long userid, String accountstype) {
 		System.out.println(accountstype);
+		session = sessionFactory.openSession();
+		session.beginTransaction();
 		boolean isAvailable = false;
-		Query<Account> query = session
-				.createQuery("from Account where userId.userId=:userid and accountType=:accounttype");
-		query.setParameter("userid", userid);
-		query.setParameter("accounttype", accountstype);
-		List<Account>accountList = query.list();
-		System.out.println(accountList);
-		if (accountList != null && !accountList.isEmpty()) {
-			isAvailable = true;
-		} else {
-			isAvailable = false;
+		try {
+			Query<Account> query = session
+
+					.createQuery("from Account where userId.userId=:userid and accountType=:accounttype");
+			query.setParameter("userid", userid);
+			query.setParameter("accounttype", accountstype);
+			List<Account> accountList = query.list();
+			System.out.println(accountList);
+			if (accountList != null && !accountList.isEmpty()) {
+				isAvailable = true;
+			} else {
+				isAvailable = false;
+			}
+
+		} catch (HibernateException exception) {
+			exception.printStackTrace();
+		} finally {
+			session.close();
 		}
-		System.out.println(isAvailable);
 		return isAvailable;
 	}
 

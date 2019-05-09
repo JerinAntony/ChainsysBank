@@ -68,7 +68,7 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 					accounts.setOpeningDate(LocalDate.now());
 					accounts.setAccountNo(String.valueOf(Utilities
 							.getAccountno()));
-					accounts.setBalance(BigDecimal.ZERO);
+					accounts.setBalance(BigDecimal.valueOf(1000));
 					accounts.setCreatedBy(user.getUserId());
 					accounts.setCreatedDate(Timestamp.valueOf(LocalDateTime
 							.now()));
@@ -77,7 +77,7 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 							.now()));
 					kfcDAO.insertAccount(accounts);
 				}
-				kfcDAO.commitTraction();
+				
 				String bodymsg = Constants.REGISTRATION_BODY_MESSAGE
 						+ "Login Id - " + user.getLoginId() + "<br/>"
 						+ "Password - " + user.getPassword();
@@ -129,11 +129,11 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 			isAvailable = kfcDAO.checkExistingAccount(profile1.getUserId()
 					.getUserId(), accountstype);
 		}
-			if (isAvailable) {
-				profileobj = new Profile();
-				profileobj = profile1;
-			}
-		
+		if (isAvailable) {
+			profileobj = new Profile();
+			profileobj = profile1;
+		}
+
 		return profileobj;
 	}
 
@@ -154,7 +154,7 @@ public class KnowYourCustomerServiceImpl implements KnowYourCustomerService {
 		accounts.setModifiedBy(user.getUserId());
 		accounts.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
 		kfcDAO.insertAccount(accounts);
-		kfcDAO.commitTraction();
+		
 	}
 
 	@Override

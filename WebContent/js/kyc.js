@@ -10,5 +10,7 @@ function allowNumbersOnly(e) {
 }
 
 $(document).ready( function () {
-    $('#customers').dataTable();
+    $('#customers').dataTable({
+    	"searching":false
+    });
 } );

@@ -20,7 +20,6 @@ import com.chainsys.bank.service.impl.LoginServiceImpl;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -40,10 +39,11 @@ public class Login extends HttpServlet {
 			if (loginMinutes == 0) {
 				Users checkValiduser = loginservice.validateLogin(user);
 				if (checkValiduser != null) {
-					
+
 					HttpSession session = request.getSession();
 					session.setAttribute("USERID", checkValiduser.getUserId());
-					session.setAttribute("USERNAME", checkValiduser.getFirstName());
+					session.setAttribute("USERNAME",
+							checkValiduser.getFirstName());
 					loginservice.addVerification(checkValiduser);
 					RequestDispatcher rd = request
 							.getRequestDispatcher("authentication.jsp");

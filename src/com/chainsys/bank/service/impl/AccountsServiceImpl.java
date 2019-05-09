@@ -3,13 +3,8 @@ package com.chainsys.bank.service.impl;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
-
-import javax.transaction.UserTransaction;
 
 import com.chainsys.bank.dao.AccountsDAO;
 import com.chainsys.bank.dao.impl.AccountsDAOImpl;
@@ -38,7 +33,7 @@ public class AccountsServiceImpl implements AccountsService {
 		payee.setModifiedBy(payee.getUserId().getUserId());
 		payee.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
 		isadded = accountsDAO.addPayee(payee);
-		accountsDAO.commitTraction();
+
 		return isadded;
 	}
 
@@ -62,7 +57,7 @@ public class AccountsServiceImpl implements AccountsService {
 
 	@Override
 	public boolean addUserTransaction(Account accounts,
-			UsersTransanction usertransanction) {
+			UsersTransanction usertransanction, Account account2) {
 		boolean isSucess = false;
 		usertransanction.setCreatedBy(usertransanction.getAccountsId()
 				.getUserId().getUserId());
@@ -72,8 +67,8 @@ public class AccountsServiceImpl implements AccountsService {
 		usertransanction
 				.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
 		isSucess = accountsDAO.addUserTransaction(usertransanction);
-		balanceAmountUpdate(accounts, usertransanction);
-		accountsDAO.commitTraction();
+		balanceAmountUpdate(accounts, usertransanction, account2);
+
 		return isSucess;
 	}
 
@@ -85,23 +80,41 @@ public class AccountsServiceImpl implements AccountsService {
 
 	@Override
 	public void balanceAmountUpdate(Account accounts,
-			UsersTransanction userstrans) {
+			UsersTransanction userstrans, Account account2) {
 		if (accounts != null) {
 			double amount = accounts.getBalance().doubleValue()
 					- userstrans.getAmount().doubleValue();
+			double payeeAmount = account2.getBalance().doubleValue()
+					+ userstrans.getAmount().doubleValue();
+			account2.setBalance(BigDecimal.valueOf(payeeAmount));
 			accounts.setBalance(BigDecimal.valueOf(amount));
+			System.out.println(amount);
+			System.out.println(payeeAmount);
 			accounts.setModifiedBy(userstrans.getModifiedBy());
 			accounts.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
+			account2.setModifiedBy(userstrans.getModifiedBy());
+			account2.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
 			accountsDAO.balanceAmountUpdate(accounts);
+			accountsDAO.balanceAmountUpdate(account2);
 		}
 
 	}
 
 	@Override
-	public List<UsersTransanction> findAccountsSummary(Date from, Date to) {
+	public List<UsersTransanction> findAccountsSummary(Date from, Date to,
+			Account account) {
 		List<UsersTransanction> summaryList = accountsDAO.findAccountsSummary(
-				from, to);
+				from, to, account);
 		return summaryList;
+	}
+
+	@Override
+	public Account findBalance(long id) {
+		// TODO Auto-generated method stub
+		AccountsDAO accountsDAO = new AccountsDAOImpl();
+		Account account = null;
+		account = accountsDAO.findBalance(id);
+		return account;
 	}
 
 }

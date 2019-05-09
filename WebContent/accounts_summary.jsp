@@ -75,7 +75,7 @@ input[type=text], select {
 	width: 100%;
 }
 
- #customers td, #customers th {
+#customers td, #customers th {
 	border: 1px solid #ddd;
 	padding: 8px;
 }
@@ -94,7 +94,7 @@ input[type=text], select {
 	text-align: left;
 	background-color: #4CAF50;
 	color: white;
-} 
+}
 </style>
 
 </head>
@@ -109,7 +109,7 @@ input[type=text], select {
 
 		<div align="center" class="divsummary">
 			<p class="p">Available Balance</p>
-			<p class="p">9400</p>
+			<p class="p">${BALANCE.balance }</p>
 		</div>
 	</div>
 	<br />
@@ -167,6 +167,7 @@ input[type=text], select {
 					</tr>
 
 				</c:forEach>
+				
 			</tbody>
 		</table>
 

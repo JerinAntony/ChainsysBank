@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.chainsys.bank.dao.AccountsDAO;
+import com.chainsys.bank.dao.impl.AccountsDAOImpl;
 import com.chainsys.bank.model.Account;
 import com.chainsys.bank.model.Payee;
 import com.chainsys.bank.model.Users;
@@ -62,6 +64,11 @@ public class FundTransfer extends HttpServlet {
 		LoginService loginservice = new LoginServiceImpl();
 		Users user = loginservice.getUser(userid);
 		long payee = Long.parseLong(request.getParameter("payee"));
+		AccountsDAO accountsDAO=new AccountsDAOImpl();
+		Payee payee2=new Payee();
+		payee2=accountsDAO.findPayee(payee);
+		Users user2 = loginservice.getUser(payee2.getUserId().getUserId());
+		
 		double amount = Double.valueOf(request.getParameter("amount"));
 		String remark = request.getParameter("remark");
 		String transanctionmode = request.getParameter("transactionmode");
@@ -73,9 +80,10 @@ public class FundTransfer extends HttpServlet {
 		userstransanction.setTranasctionMode(transanctionmode);
 		userstransanction.setTranasctionStatus("Transanction Approved");
 		Account account = accountservice.findUserAccount(user);
+		Account payeeAccount=accountservice.findUserAccount(user2);
 		userstransanction.setAccountsId(account);
 		userstransanction.setRemarks(remark);
-		if (accountservice.addUserTransaction(account,userstransanction)) {
+		if (accountservice.addUserTransaction(account,userstransanction,payeeAccount)) {
 			//accountservice.balanceAmountUpdate(account,userstransanction);
 			String message = "Transanction Sucessful";
 			request.setAttribute("MESSAGE", message);

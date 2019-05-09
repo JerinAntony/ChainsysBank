@@ -118,4 +118,5 @@ public class LoginServiceImpl implements LoginService {
 		Users user = loginDAO.getUser(userid);
 		return user;
 	}
+
 }

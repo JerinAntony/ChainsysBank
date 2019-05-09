@@ -27,6 +27,7 @@ public class Branch extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String bankName = request.getParameter("bankname");
+		System.out.println("1."+bankName);
 		AccountsService accountsService = new AccountsServiceImpl();
 		List<BankIfscCode> branchList = accountsService
 				.findBranchByBank(bankName);

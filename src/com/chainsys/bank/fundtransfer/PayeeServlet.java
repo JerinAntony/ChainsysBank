@@ -1,9 +1,7 @@
 package com.chainsys.bank.fundtransfer;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,8 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
-
+import com.chainsys.bank.dao.AccountsDAO;
+import com.chainsys.bank.dao.impl.AccountsDAOImpl;
+import com.chainsys.bank.model.Account;
 import com.chainsys.bank.model.BankIfscCode;
 import com.chainsys.bank.model.Payee;
 import com.chainsys.bank.model.Users;
@@ -50,17 +49,22 @@ public class PayeeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
+		/*HttpSession session = request.getSession(false);
 		long userid = (long) session.getAttribute("USERID");
 		LoginService loginservice = new LoginServiceImpl();
 		Users user = loginservice.getUser(userid);
-		AccountsService acountsservice = new AccountsServiceImpl();
+		*/AccountsService acountsservice = new AccountsServiceImpl();
 		String holdername = request.getParameter("holdername");
 		String accountno = request.getParameter("accountno");
 		String bank = request.getParameter("bankname");
 		String branch = request.getParameter("branchname");
 		System.out.println(bank);
 		System.out.println(branch);
+		AccountsDAO accountsDAO=new AccountsDAOImpl();
+		Account account=accountsDAO.findAccountByNo(accountno);
+		System.out.println("The id is"+account.getUserId().getUserId());
+		LoginService service=new LoginServiceImpl();
+		Users user=service.getUser(account.getUserId().getUserId());
 		BankIfscCode bankIfsccode = new BankIfscCode();
 		if (!bank.isEmpty() && bank.length() > 0 && bank != null) {
 			bankIfsccode.setBankName(bank);

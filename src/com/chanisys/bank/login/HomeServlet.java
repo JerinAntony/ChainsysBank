@@ -30,11 +30,13 @@ public class HomeServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		long userid = (long) session.getAttribute("USERID");
+		System.out.println(userid);
 		KnowYourCustomerService kyvService = new KnowYourCustomerServiceImpl();
 		Profile profile = kyvService.profileView(userid);
 		CurrentAddress currentAddress=kyvService.userCurrentAddress(userid);
 		request.setAttribute("PROFILE", profile);
 		request.setAttribute("CURRENTADDRESS", currentAddress);
+		System.out.println(currentAddress);
 		RequestDispatcher rd = request.getRequestDispatcher("profile.jsp");
 		rd = request.getRequestDispatcher("home.jsp");
 		rd.forward(request, response);

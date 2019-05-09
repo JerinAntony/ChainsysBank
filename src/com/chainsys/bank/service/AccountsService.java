@@ -21,12 +21,12 @@ public interface AccountsService {
 	
 	List<Payee> findAllPayee();
 	
-	boolean addUserTransaction(Account accounts,UsersTransanction usertransanction);
+	boolean addUserTransaction(Account accounts,UsersTransanction usertransanction,Account account2);
 	
 	Account findUserAccount(Users user);
 	
-	void balanceAmountUpdate(Account accounts,UsersTransanction userstrans);
+	void balanceAmountUpdate(Account accounts,UsersTransanction userstrans,Account account2);
 	
-	List<UsersTransanction> findAccountsSummary(Date from,Date to);
-	
+	List<UsersTransanction> findAccountsSummary(Date from,Date to,Account account);
+	Account findBalance(long id);
 }

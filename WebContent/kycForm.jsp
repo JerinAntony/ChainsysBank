@@ -128,13 +128,13 @@ h1 {
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<i class="fa fa-male fa-2x prefix" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<input
 									type="radio" class="form-check-input" id="gender" name="gender"
-									value="F"> <label class="form-check-label"
+									value="M"> <label class="form-check-label"
 									for="materialInline1"></label>
 							</div>
 							<div class="form-check form-check-inline">
 								<i class="fa fa-female fa-2x prefix" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<input
 									type="radio" class="form-check-input" id="gender" name="gender"
-									value="M"> <label class="form-check-label" for="gender"></label>
+									value="F"> <label class="form-check-label" for="gender"></label>
 							</div>
 						</div>
 						<!-- Grid row -->

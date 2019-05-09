@@ -40,11 +40,11 @@ public class Profile {
 	@NotNull
 	private String occupdation;
 	
-	@Column(name = "aadhar_no")
+	@Column(name = "aadhar_no", unique = true)
 	@NotNull
 	private long aadharNo;
 	
-	@Column(name = "pancard")
+	@Column(name = "pancard", unique = true)
 	@NotNull
 	private String pancard;
 	
